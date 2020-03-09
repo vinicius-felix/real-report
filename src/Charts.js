@@ -98,10 +98,10 @@ const EnvCharts = (props) => (
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="Answered" fill="red" />
-        <Bar dataKey="Failed" fill="blue" />
-        <Bar dataKey="No Answer" fill="green" />
-        <Bar dataKey="Busy" fill="black" />
+        <Bar dataKey="Answered" fill="#236467" />
+        <Bar dataKey="Failed" fill="#2E4272" />
+        <Bar dataKey="No Answer" fill="#AA8539" />
+        <Bar dataKey="Busy" fill="#AA6D39" />
       </BarChart>
     </Col>
   </div>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Layout, Row, Col } from 'antd';
+import { LineChartOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const { Header, Footer, Content, Sider } = Layout;
@@ -50,7 +51,7 @@ const MainLayoutSite = (props) => (
   
   <Layout style={fillWindow}>
 
-    <Header style={{backgroundColor: 'gray' }}>
+    <Header style={{backgroundColor: '#A0D6D9' }}>
       <Col span={3}></Col>
       <Col span={18}>
         <h3 style={{...colorWhite, textAlign: 'center'}}>Reports</h3>
@@ -62,12 +63,13 @@ const MainLayoutSite = (props) => (
 
     <Layout style={{ backgroundColor: 'white' }}>
 
-      <Sider style={{ backgroundColor: '#ff9999', paddingTop: "14%" }}> {/* red */}      
+      <Sider style={{ backgroundColor: '#99bbc2', paddingTop: "14%" }}> {/* red */}      
 
         { menus.map(menu => (
           <Row key={menu.name} style={paddingAll}>
             <Col span={5} />
             {/* <Col span={4}><Icon style={{color:'white', fontSize: 18}} type={menu.icon} /></Col> */}
+            <Col span={4}><LineChartOutlined /></Col>
             <Col span={10}><Link style={{color: 'black'}} to={menu.to}>{menu.name}</Link></Col>
             <Col span={5} />
           </Row>
@@ -88,7 +90,7 @@ const MainLayoutSite = (props) => (
       </Content>
     </Layout>
 
-    <Footer style={{fontSize: 10, textAlign: 'center', backgroundColor: 'gray'}}>Versão 1.0.0</Footer>
+    <Footer style={{fontSize: 10, textAlign: 'center', backgroundColor: '#e3e3e3'}}>Versão 1.0.0</Footer>
     
   </Layout>    
 );
