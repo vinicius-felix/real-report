@@ -23,8 +23,7 @@ const columns = [
     title: 'Nome_Rota',
     dataIndex: 'Nome_Rota',
     key: 'nomeRota',
-    width: 300,
-    render: text => text.split('_').join(' ')
+    width: 300
   },
 
   {
