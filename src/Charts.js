@@ -76,7 +76,7 @@ class Charts extends Component{
 
 const EnvCharts = (props) => (
   <div>
-    <div style={{ marginLeft: "40%"}}><h2>{props.envName}</h2></div>
+    {/* <div style={{ marginLeft: "40%"}}><h2>{props.envName}</h2></div> */}
     {/* <Col span={24}>
       <LineChart width={650} height={300} data={props.dataSource} margin={marginChart}>
         <CartesianGrid strokeDasharray="3 3" />
@@ -92,6 +92,7 @@ const EnvCharts = (props) => (
     </Col> */}
 
     <Col span={props.colSpan || 24}>
+      <div style={{ textAlign: 'left' }}><h2>{props.envName}</h2></div>
       <BarChart width={props.colWidth || 800} height={props.colHeight || 300} data={props.dataSource} margin={marginChart}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="Nome_Rota" />

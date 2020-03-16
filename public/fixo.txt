@@ -1,4 +1,5 @@
-Data;Id;Ambiente;Nome Rota;No Answer;Failed;Answered;Busy;Total;% No Answer;% Failed;% Answered;% Busy
+Data;Id;Ambiente;Nome_Rota;No Answer;Failed;Answered;Busy;Total;% No Answer;% Failed;% Answered;% Busy;
+01/03/2020;168;1;Baldussi TDM - Fixo;347;112;195;6;660;53%;17%;30%;1%
 29/02/2020;168;1;Baldussi TDM - Fixo;347;112;195;6;660;53%;17%;30%;1%
 29/02/2020;153;1;KMG Ypy ITX - Fixo;6960;5849;1065;322;14196;49%;41%;8%;2%
 29/02/2020;154;1;Ypy ITX - Fixo;38071;19753;11083;871;69778;55%;28%;16%;1%
@@ -8,4 +9,4 @@ Data;Id;Ambiente;Nome Rota;No Answer;Failed;Answered;Busy;Total;% No Answer;% Fa
 29/02/2020;122;2;Ypy ITX - Fixo;12094;3865;4502;342;20803;58%;19%;22%;2%
 29/02/2020;46;4;Baldussi TDM - Fixo;84;16;77;3;180;47%;9%;43%;2%
 29/02/2020;27;4;KMG Ypy ITX - Fixo;10455;10415;1989;452;23311;45%;45%;9%;2%
-29/02/2020;28;4;Ypy ITX - Fixo;26909;7179;12287;639;47014;57%;15%;26%;1%
+29/02/2020;28;4;Zypy ITX - Fixo;26909;7179;12287;639;47014;57%;15%;26%;1%

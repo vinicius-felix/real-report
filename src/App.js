@@ -10,20 +10,25 @@ const columns = [
     title: 'Data',
     dataIndex: 'Data',
     key: 'data',
+    //sortDirections: ['descend', 'ascend'],
+    sorter: (a, b) => a > b ? a : b,
     width: 120
   },
 
   {
-    title: 'Ambiente',
+    title: 'Amb',
     dataIndex: 'Ambiente',
-    key: 'ambiente'
+    key: 'ambiente',    
+    sorter: (a, b) => a.Ambiente - b.Ambiente
   },
 
   {
-    title: 'Nome_Rota',
+    title: 'Nome Rota',
     dataIndex: 'Nome_Rota',
     key: 'nomeRota',
-    width: 300
+    //sortDirections: ['descend', 'ascend'],
+    //sorter: (a, b) => a.Nome_Rota.length - b.Nome_Rota.length,
+    minWidth: 300
   },
 
   {
@@ -88,10 +93,17 @@ class App extends Component {
     dt: transformToJSON()
   }
 
+  handleChange = (pagination, filters, sorter) => {
+    this.setState({
+      filteredInfo: filters,
+      sortedInfo: sorter
+    });
+  }
+
   render(){
     return(
       <Row>
-        <MainLayout content={<Table style={{ width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} />} />
+        <MainLayout content={<Table rowKey="Id" style={{ width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} onChange={this.handleChange} />} />
       </Row>
     );
   }

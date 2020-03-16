@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Layout, Row, Col } from 'antd';
-import { LineChartOutlined } from '@ant-design/icons';
+import { LineChartOutlined, HomeOutlined, DatabaseOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const { Header, Footer, Content, Sider } = Layout;
@@ -20,21 +20,6 @@ const colorWhite = {
 const paddingAll = {
   padding: 10
 }
-
-const menus = [  
-  {
-    name: 'Início',
-    icon: 'home',
-    to: '/'
-  },
-
-  {
-    name: 'Gráficos',
-    icon: 'charts',
-    to: '/charts'
-  }
-
-];
 
 export class MainLayout extends Component {
 
@@ -64,24 +49,35 @@ const MainLayoutSite = (props) => (
     <Layout style={{ backgroundColor: 'white' }}>
 
       <Sider style={{ backgroundColor: '#99bbc2', paddingTop: "14%" }}> {/* red */}      
+        
+        <Row key="home" style={paddingAll}>
+          <Col span={5} />
+          <Col span={4}><HomeOutlined /></Col>
+          <Col span={10}><Link style={{color: 'black'}} to="/">Início</Link></Col>            
+          <Col span={5} />
+        </Row>
 
-        { menus.map(menu => (
-          <Row key={menu.name} style={paddingAll}>
-            <Col span={5} />
-            {/* <Col span={4}><Icon style={{color:'white', fontSize: 18}} type={menu.icon} /></Col> */}
-            <Col span={4}><LineChartOutlined /></Col>
-            <Col span={10}><Link style={{color: 'black'}} to={menu.to}>{menu.name}</Link></Col>
-            <Col span={5} />
-          </Row>
-          ))
-        }
+        <Row key="data" style={paddingAll}>
+          <Col span={5} />
+          <Col span={4}><DatabaseOutlined /></Col>
+          <Col span={10}><Link style={{color: 'black'}} to="/data">Dados</Link></Col>            
+          <Col span={5} />
+        </Row>
+
+        <Row key="charts" style={paddingAll}>
+          <Col span={5} />
+          <Col span={4}><LineChartOutlined /></Col>
+          <Col span={10}><Link style={{color: 'black'}} to="/charts">Gráficos</Link></Col>            
+          <Col span={5} />
+        </Row>
+        
       </Sider>
 
-      <Content style={{ backgroundColor: 'white', paddingLeft: '10%', margin: 0, minHeight: 280 }}> {/* white */}
+      <Content style={{ backgroundColor: 'white', paddingLeft: '0%', margin: 0, minWidth: '100%' }}> {/* white */}
 
         <Col span={2} />
 
-        <Col span={20} style={{ paddingTop: 50 }}>
+        <Col span={20} style={{ paddingTop: 0 }}>
           {props.content}
         </Col>
 
