@@ -36,7 +36,7 @@ const MainLayoutSite = (props) => (
   
   <Layout style={fillWindow}>
 
-    <Header style={{backgroundColor: '#A0D6D9' }}>
+    <Header style={{backgroundColor: '#99bbc2' }}>
       <Col span={3}></Col>
       <Col span={18}>
         <h3 style={{...colorWhite, textAlign: 'center'}}>Reports</h3>
@@ -48,7 +48,7 @@ const MainLayoutSite = (props) => (
 
     <Layout style={{ backgroundColor: 'white' }}>
 
-      <Sider style={{ backgroundColor: '#99bbc2', paddingTop: "14%" }}> {/* red */}      
+      <Sider style={{ backgroundColor: '#A0D6D9', paddingTop: "14%" }}> {/* red */}      
         
         <Row key="home" style={paddingAll}>
           <Col span={5} />
@@ -60,7 +60,7 @@ const MainLayoutSite = (props) => (
         <Row key="data" style={paddingAll}>
           <Col span={5} />
           <Col span={4}><DatabaseOutlined /></Col>
-          <Col span={10}><Link style={{color: 'black'}} to="/data">Dados</Link></Col>            
+          <Col span={10}><Link style={{color: 'black'}} to="/data">Rotas por Tabulações</Link></Col>            
           <Col span={5} />
         </Row>
 

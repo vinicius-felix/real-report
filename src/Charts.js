@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { MainLayout } from './MainLayout';
-import { Row, Col, Radio } from "antd";
-import { BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { Row, Col } from "antd";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { transformToJSON, getEnv, getKMG, getAMD } from './utils';
 //import dataSource from './dataSource';
 

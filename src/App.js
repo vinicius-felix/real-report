@@ -1,18 +1,19 @@
 import React, { Component } from 'react';
-import { Table, Row, Col } from "antd";
+import { Table, Row, Col, DatePicker } from "antd";
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import { transformToJSON } from './utils';
 //import dataSource from './dataSource';
+import moment from 'moment';
 
 const columns = [
   {
     title: 'Data',
     dataIndex: 'Data',
-    key: 'data',
-    //sortDirections: ['descend', 'ascend'],
-    sorter: (a, b) => a > b ? a : b,
-    width: 120
+    key: 'data',    
+    sorter: (a, b) => a.Data > b.Data ? a.Data > b.Data : a.Data < b.Data,
+    width: 120,
+    render: text => moment(text).format('DD/MM/YYYY')
   },
 
   {
@@ -26,8 +27,7 @@ const columns = [
     title: 'Nome Rota',
     dataIndex: 'Nome_Rota',
     key: 'nomeRota',
-    //sortDirections: ['descend', 'ascend'],
-    //sorter: (a, b) => a.Nome_Rota.length - b.Nome_Rota.length,
+    sorter: (a, b) => a.Nome_Rota < b.Nome_Rota ? -1 : 1,
     minWidth: 300
   },
 
@@ -87,10 +87,19 @@ const columns = [
 
 ];
 
+const dateFormat = 'DD/MM/YYYY';
+const today = moment().format('DD/MM/YYYY');
+
 class App extends Component {
 
   state = {
     dt: transformToJSON()
+  }
+
+  filterByDay = (day) => {
+    let obj = transformToJSON();
+    let filtered = obj && obj.filter( function(elem) { return moment(elem.Data).format('DD/MM/YYYY') === day } )
+    return filtered;
   }
 
   handleChange = (pagination, filters, sorter) => {
@@ -103,7 +112,17 @@ class App extends Component {
   render(){
     return(
       <Row>
-        <MainLayout content={<Table rowKey="Id" style={{ width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} onChange={this.handleChange} />} />
+        <MainLayout content={
+          <div>
+            <Row style={{margin: 16}}>
+              <Col style={{padding: 2, marginRight: 5}}> <h3><b>Filtrar Data:</b></h3> </Col>
+              <Col>
+                <DatePicker allowClear={false} defaultValue={moment(today, dateFormat)} format={dateFormat} onChange={ (e) => this.setState({dt: this.filterByDay(moment(e).format('DD/MM/YYYY'))}) } />
+              </Col>
+            </Row>
+            <Table rowKey="Id" style={{ width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} onChange={this.handleChange} />
+          </div>
+        } />
       </Row>
     );
   }
