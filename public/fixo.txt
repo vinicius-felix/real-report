@@ -1,4 +1,4 @@
-Data;Id;Ambiente;Nome_Rota;No Answer;Failed;Answered;Busy;Total;% No Answer;% Failed;% Answered;% Busy
+Data;Id;Ambiente;Nome_Rota;No Answer;Failed;Answered;Busy;Total;% No Answer;% Failed;% Answered;% Busy;
 2020-04-01T03:00:00.000Z;12;4;EBS 1 - 61286;7896;3836;728;0;12460;63%;31%;6%;0%
 2020-04-01T03:00:00.000Z;22;2;EBS 0 - 108406;11810;6044;1021;0;18875;63%;32%;5%;0%
 2020-04-01T03:00:00.000Z;24;2;EBS 2 - 111848;11209;5849;1101;0;18159;62%;32%;6%;0%
