@@ -31,17 +31,26 @@ export function transformToJSON(){
   return out;
 }
 
+// Ordena o objeto pelo nome da rota(Ordem alfabetica)
+function sortArray(array){
+  let arrSort = array.sort(function(a, b){ if(a.Nome_Rota > b.Nome_Rota){ return 1 } return -1 });
+  return arrSort;
+}
+
 // Filtrar por ambiente
-export function getEnv(array, env){  
-  return array.filter( ( elem, index, arr ) => elem.Ambiente === env );
+export function getEnv(array, env){
+  let arrSort = sortArray(array);
+  return arrSort.filter( ( elem, index, arr ) => elem.Ambiente === env );
 }
 
 // Retornar rotas do tipo KMG
 export function getKMG(array){
-  return array.filter( ( elem, index, arr ) => elem.Nome_Rota.includes("KMG") )
+  let arrSort = sortArray(array);
+  return arrSort.filter( ( elem, index, arr ) => elem.Nome_Rota.includes("KMG") )
 }
 
 // Retornar todas do tipo AMD
 export function getAMD(array){
-  return array.filter( ( elem, index, arr ) => !elem.Nome_Rota.includes("KMG") )
+  let arrSort = sortArray(array);
+  return arrSort.filter( ( elem, index, arr ) => !elem.Nome_Rota.includes("KMG") )
 }
