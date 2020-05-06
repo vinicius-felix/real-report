@@ -1,0 +1,16 @@
+id;campanha;status;servidor;receptivo;operadora;dac;cockpit;carteira;
+1;Callback Banestes;Ativa;10;0800 024 4201;Vonex;Clique Aqui!;Clique Aqui!;Banestes
+2;Callback EAVM;Ativa;10;0800 024 4360;Vonex;Clique Aqui!;Clique Aqui!;Cartoes EAVM
+3;Callback IBI;Ativa;83;0800 024 4365;Vonex;Clique Aqui!;Clique Aqui!;Banco IBI
+4;CallBack NCO;Ativa;12;0800 024 4369;Vonex;Clique Aqui!;Clique Aqui!;Nao Correntista
+5;CallBack Ativos MIX G2;Ativa;87;0800 024 4371;Vonex;Clique Aqui!;Clique Aqui!;Banco do Brasil
+6;CallBack Massificados LP;Ativa;83;0800 056 2461;Vonex;Clique Aqui!;Clique Aqui!;Massificados LP
+7;0800 Ativos S.A;Ativa;87;0800 024 4209;Vonex;Clique Aqui!;-;Ativos S.A
+8;Callback Ativos S.A;Ativa;87;0800 024 4216;Vonex;Clique Aqui!;Clique Aqui!;Ativos S.A
+9;Callback ATIVOS G1;Ativa;87;0800 025 8870;Vonex;Clique Aqui!;Clique Aqui!;Ativos S.A G1
+10;Callback Brad Comer;Ativa;12;0800 024 4370;Vonex;Clique Aqui!;Clique Aqui!;Bradesco Comercial
+11;Callback Manutencao;Ativa;87;0800 056 2458;Vonex;Clique Aqui!;Clique Aqui!;Manutencao Bradesco
+12;Callback Brad Prime;Ativa;87;0800 888 0098;Vonex;Clique Aqui!;Clique Aqui!;Bradesco Prime
+13;CallBack Negociados;Ativa;87;0800 025 8971;Vonex;Clique Aqui!;Clique Aqui!;CallBack Negociados
+14;0800 Ouvidoria;Ativa;12;0800 024 4393;Vonex;Clique Aqui!;-;Ouvidoria
+15;Brad Rep Agencia;Ativa;12;0800 771 0525;OI;Clique Aqui!;-;Brad rep Agencia

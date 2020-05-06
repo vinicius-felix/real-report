@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, DatePicker } from "antd";
+import { Table, Row, Col, DatePicker } from 'antd';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import { transformToJSON } from './utils';
@@ -94,7 +94,7 @@ class App extends Component {
   state = {
     dt: transformToJSON(),
     pagination: {
-      pageSize: 10
+      pageSize: 15
     }
   }
 
@@ -123,10 +123,9 @@ class App extends Component {
                 <DatePicker allowClear={false} defaultValue={moment(today, dateFormat)} format={dateFormat} onChange={ (e) => this.setState({dt: this.filterByDay(moment(e).format('DD/MM/YYYY'))}) } />
               </Col>
             </Row>
-            <Table rowKey="Id" style={{ width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} onChange={this.handleChange} pagination={pagination} />
+            <Table rowKey='RowID' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} onChange={this.handleChange} pagination={pagination} />
           </div>
         } />
-      {console.log(this.state)}
       </Row>
     );
   }

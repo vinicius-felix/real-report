@@ -1,0 +1,6 @@
+id;campanha;status;servidor;receptivo;operadora;dac;cockpit;carteira;
+1001;EAVM RECEPTIVO;Ativa;10;64 2101-9050;Embratel;Clique Aqui!;-;EAVM
+1002;BB RECEPTIVO;Ativa;87;64 2101-9900;Embratel;Clique Aqui!;-;Banco Do Brasil
+1003;BRADESCO RECEPTIVO;Ativa;87;64 2101-1700;OI;Clique Aqui!;-;Bradesco Comercial
+1004;URA RECEPTIVO 10;Ativa;10;64 2101-1710;OI;-;-;Bradesco Comercial
+1005;URA RECEPTIVO 12;Ativa;12;64 2101-1712;OI;-;-;Bradesco Comercial

@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Routes from './Routes';
+import Phones from './Phones';
 import Charts from './Charts';
 import NotFoundPage from './NotFoundPage';
 import * as serviceWorker from './serviceWorker';
@@ -9,6 +11,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 ReactDOM.render(<BrowserRouter>
   <Switch>
     <Route exact path='/' component={App} />
+    <Route exact path='/routes' component={Routes} />
+    <Route exact path='/phones' component={Phones} />
     <Route exact path='/charts' component={Charts} />
     <Route path='*' component={NotFoundPage} />
   </Switch>
