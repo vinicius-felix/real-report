@@ -39,7 +39,7 @@ const MainLayoutSite = (props) => (
     <Header style={{backgroundColor: '#990000' }}>
       <Col span={3}></Col>
       <Col span={18}>
-        <h3 style={{...colorWhite, textAlign: 'center'}}>Reports</h3>
+        <h3 style={{...colorWhite, textAlign: 'center'}}>Real Jurídica - Acompanhamento Diário de Rotas</h3>
       </Col>
       <Col span={3}>        
         
@@ -64,7 +64,7 @@ const MainLayoutSite = (props) => (
           <Col span={5} />
         </Row>
 
-        <Row key="data" style={paddingAll}>
+        <Row key="phones" style={paddingAll}>
           <Col span={2} />
           <Col span={4}><PhoneOutlined style={{color: 'red', fontSize: 25}} /></Col>
           <Col span={10}><Link style={{color: 'white'}} to="/phones">Telefones</Link></Col>            
