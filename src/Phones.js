@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Card, Modal, Form, Input, Popconfirm, Button, Divider, message } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { MainLayout } from './MainLayout';
 import apiReceptivos from './Services/service-receptivos';
 import apiCallbacks from './Services/service-callbacks';
@@ -14,10 +14,30 @@ class Phones extends Component {
     data: {}
   };
 
-  onOkModal = () => {
-    const { form } = this.state;
-    apiReceptivos.put(`/atualiza/${form._id}`, form);
-    document.location.reload(true);
+  handleDelete = (data) => {
+    if(data.campanha.toLowerCase().includes('callback'))
+      apiCallbacks.delete(`/apagar/${data._id}`);
+    else
+      apiReceptivos.delete(`/apagar/${data._id}`);
+  }
+
+  onConfirm = async (data) => {
+    message.success('Registro removido com sucesso!');
+    await this.handleDelete(data);
+    //document.location.reload(true);
+  }
+
+
+  onOkModalReceptivo = () => {
+    const { receptivos } = this.state.telefones;
+    apiReceptivos.put(`/atualiza/${receptivos._id}`, receptivos);
+    //document.location.reload(true);
+  };
+
+  onOkModalReceptivo = () => {
+    const { callback } = this.state.telefones;
+    apiCallbacks.put(`/atualiza/${callback._id}`, callback);
+    //document.location.reload(true);
   };
 
   onCancelModal = () => {
@@ -116,13 +136,13 @@ class Phones extends Component {
       render: (textColumn, record) => (
         <span>
           <Button style={{width: 30, textAlign: 'center'}} type='primary' size='small' onClick={() => this.handleEdit(textColumn._id)} ghost>
-            <EditOutlined />
+            <EditOutlined style={{color: 'gray'}} />
           </Button>
   
           <Divider type='vertical' />
   
-          <Popconfirm title='Deseja realmente apagar?' onConfirm={() => this.onConfirm(textColumn._id)} okText='Sim' cancelText='Não'>
-            <Button style={{width: 30}} type='primary' size='small' ghost >
+          <Popconfirm title='Deseja realmente apagar?' onConfirm={() => this.onConfirm(textColumn)} okText='Sim' cancelText='Não'>
+            <Button style={{width: 30, color: 'gray'}} type='primary' size='small' ghost >
               <DeleteOutlined />
             </Button>
           </Popconfirm>
@@ -176,13 +196,23 @@ class Phones extends Component {
           <div>
           <Col>
             <Row>
-              <Card title='Receptivos'>
+              <Card title='Receptivos' extra={
+                <Button>
+                  <PlusOutlined />
+                  Adicionar Receptivo
+                </Button>
+              }>
                 <Table rowKey='_id' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }} dataSource={this.state.telefones && this.state.telefones.receptivos} columns={this.columns} pagination={false} />
               </Card>
             </Row>
 
             <Row>
-              <Card title='Callbacks'>
+              <Card title='Callbacks' extra={
+                <Button>
+                  <PlusOutlined />
+                  Adicionar Callback
+                </Button>
+              }>>
                 <Table rowKey='_id' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }} dataSource={this.state.telefones && this.state.telefones.callbacks} columns={this.columns} pagination={false} />
               </Card>
             </Row>
@@ -191,7 +221,7 @@ class Phones extends Component {
           </div>
         } />
 
-        <Modal title={'Editar Receptivo'} visible={this.state.visible} onOk={this.onOkModal} onCancel={this.onCancelModal}>
+        <Modal title={'Editar Receptivo'} visible={this.state.visible} onOk={this.onOkModalReceptivo} onCancel={this.onCancelModal}>
 
           <Form>
             <Form.Item id='campanha' name='campanha' label='Campanha' rules={[{ required: true }]}>

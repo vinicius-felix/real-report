@@ -73,24 +73,24 @@ class Charts extends Component{
             <div style={{paddingBottom: 150}}>
               <EnvCharts envName={'Ambiente 2'} dataSource={env2} uId={'amb2'}/>
               <Row style={{paddingTop: 30}}>
-                <EnvCharts envName={'KMG'} dataSource={env2KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb2'} />
-                <EnvCharts envName={'AMD'} dataSource={env2AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb2'} />
+                <EnvCharts envName={'KMG'} dataSource={env2KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb2-KMG'} />
+                <EnvCharts envName={'AMD'} dataSource={env2AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb2-AMD'} />
               </Row>
             </div>
 
             <div style={{paddingBottom: 150}}>
               <EnvCharts envName={'Ambiente 3'} dataSource={env3} uId={'amb3'} />
               <Row style={{paddingTop: 30}}>
-                <EnvCharts envName={'KMG'} dataSource={env3KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb3'} />
-                <EnvCharts envName={'AMD'} dataSource={env3AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb3'} />
+                <EnvCharts envName={'KMG'} dataSource={env3KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb3-KMG'} />
+                <EnvCharts envName={'AMD'} dataSource={env3AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb3-AMD'} />
               </Row>
             </div>
 
             <div style={{paddingBottom: 150}}>
               <EnvCharts envName={'Ambiente 4'} dataSource={env4} uId={'amb4'} />
               <Row style={{paddingTop: 30}}>
-                <EnvCharts envName={'KMG'} dataSource={env4KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb4'} />
-                <EnvCharts envName={'AMD'} dataSource={env4AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb4'} />
+                <EnvCharts envName={'KMG'} dataSource={env4KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb4-KMG'} />
+                <EnvCharts envName={'AMD'} dataSource={env4AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb4-AMD'} />
               </Row>
             </div>
 
