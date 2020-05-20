@@ -47,10 +47,10 @@ class Phones extends Component {
   }
 
   onEdit = (id) => {
-    apiReceptivos.get(`/show/${id}`)
+    apiReceptivos.get(`/exibir/${id}`)
       .then(res => {
         this.setState({
-          form: res.telefones.gain
+          form: res.telefones.receptivos
         });
       })
       .catch(err => console.warn(err));
@@ -68,6 +68,12 @@ class Phones extends Component {
       visible: true
     });
   };
+
+  handleAdd = () => {
+    this.setState({
+      visible: true
+    });
+  }
 
   onChange = e => {
     const value = e.target.value, key = e.target.id;
@@ -189,15 +195,19 @@ class Phones extends Component {
     //     span: 13
     //   }
     // };
+    const layout = {
+      labelCol: { span: 5 },
+      wrapperCol: { span: 16 },
+    };
 
     return(
       <Row>
         <MainLayout content={
           <div>
           <Col>
-            <Row>
+          <Row style={{paddingTop: 30, marginLeft: 10}}>
               <Card title='Receptivos' extra={
-                <Button>
+                <Button onClick={this.handleAdd}>
                   <PlusOutlined />
                   Adicionar Receptivo
                 </Button>
@@ -206,13 +216,13 @@ class Phones extends Component {
               </Card>
             </Row>
 
-            <Row>
+            <Row style={{paddingTop: 30, marginLeft: 10}}>
               <Card title='Callbacks' extra={
-                <Button>
+                <Button onClick={this.handleAdd}>
                   <PlusOutlined />
                   Adicionar Callback
                 </Button>
-              }>>
+              }>
                 <Table rowKey='_id' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }} dataSource={this.state.telefones && this.state.telefones.callbacks} columns={this.columns} pagination={false} />
               </Card>
             </Row>
@@ -223,8 +233,8 @@ class Phones extends Component {
 
         <Modal title={'Editar Receptivo'} visible={this.state.visible} onOk={this.onOkModalReceptivo} onCancel={this.onCancelModal}>
 
-          <Form>
-            <Form.Item id='campanha' name='campanha' label='Campanha' rules={[{ required: true }]}>
+          <Form {...layout}>
+            <Form.Item id='campanha' name='campanha' label='Campanha' rules={[{ required: true }]} >
               <Input placeholder='Campanha' />
             </Form.Item>
 

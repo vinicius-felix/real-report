@@ -50,31 +50,31 @@ const columns = [
 
   {
     title: 'No Answered',
-    dataIndex: 'No Answer',
+    dataIndex: 'noAnswered',
     key: 'noAnswered',
   },
 
   {
     title: '% Answered',
-    dataIndex: '% Answered',
+    dataIndex: 'answeredPercent',
     key: 'answeredPercent',
   },
 
   {
     title: '% Failed',
-    dataIndex: '% Failed',
+    dataIndex: 'failedPercent',
     key: 'failedPercent',
   },
 
   {
     title: '% Busy',
-    dataIndex: '% Busy',
+    dataIndex: 'busyPercent',
     key: 'busyPercent',
   },
 
   {
     title: '% No Answered',
-    dataIndex: '% No Answer',
+    dataIndex: 'noAnsweredPercent',
     key: 'noAnsweredPercent',
   },
 

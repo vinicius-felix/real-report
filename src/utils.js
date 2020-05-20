@@ -16,8 +16,6 @@ function readTextFile(file){
 }
 
 const textFile = readTextFile('./files/fixo.txt');
-const textFileCallback = readTextFile('./files/fones-callbacks.txt');
-const textFileReceptives = readTextFile('./files/fones-receptivos.txt');
 
 // Convertendo os dados do arquivo para JSON (Delimitador ;)
 export function transformToJSON(){
@@ -31,32 +29,6 @@ export function transformToJSON(){
     return obj;
   });
   return sortArrayByDate(out);
-}
-
-export function transformToJSONReceptives(){
-  var cells = textFileCallback.split('\n').map(function (el) { return el.split(';'); });
-  var headings = cells.shift();
-  var out = cells.map(function (el) {
-    var obj = {};
-    for (var i = 0, l = el.length; i < l; i++) {
-      obj[headings[i]] = isNaN(Number(el[i])) ? el[i] : +el[i];
-    }
-    return obj;
-  });
-  return out;
-}
-
-export function transformToJSONCallbacks(){
-  var cells = textFileReceptives.split('\n').map(function (el) { return el.split(';'); });
-  var headings = cells.shift();
-  var out = cells.map(function (el) {
-    var obj = {};
-    for (var i = 0, l = el.length; i < l; i++) {
-      obj[headings[i]] = isNaN(Number(el[i])) ? el[i] : +el[i];
-    }
-    return obj;
-  });
-  return out;
 }
 
 // Ordena o objeto pelo nome da rota(Ordem alfabetica)
