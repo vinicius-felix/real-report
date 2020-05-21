@@ -1,7 +1,8 @@
 import axios from 'axios';
+const config = require('./api_link');
 
 const apiCallbacks = axios.create({
-  baseURL: 'http://localhost:3000/callbacks',
+  baseURL: config.API + '/callbacks',
 });
 
 export default apiCallbacks;

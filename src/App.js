@@ -19,7 +19,8 @@ const columns = [
     title: 'Amb',
     dataIndex: 'Ambiente',
     key: 'ambiente',    
-    sorter: (a, b) => a.Ambiente - b.Ambiente
+    sorter: (a, b) => a.Ambiente - b.Ambiente,
+    align: 'center',
   },
 
   {
@@ -34,48 +35,60 @@ const columns = [
     title: 'Answered',
     dataIndex: 'Answered',
     key: 'answered',
+    align: 'center',
   },
 
   {
     title: 'Failed',
     dataIndex: 'Failed',
     key: 'failed',
+    align: 'center',
   },
 
   {
     title: 'Busy',
     dataIndex: 'Busy',
     key: 'busy',
+    align: 'center',
   },
 
   {
     title: 'No Answered',
     dataIndex: 'noAnswered',
     key: 'noAnswered',
+    align: 'center',
   },
 
   {
     title: '% Answered',
     dataIndex: 'answeredPercent',
     key: 'answeredPercent',
+    align: 'center',
+    render: text => text && text + '%'
   },
 
   {
     title: '% Failed',
     dataIndex: 'failedPercent',
     key: 'failedPercent',
+    align: 'center',
+    render: text => text && text + '%'
   },
 
   {
     title: '% Busy',
     dataIndex: 'busyPercent',
     key: 'busyPercent',
+    align: 'center',
+    render: text => text && text + '%'
   },
 
   {
     title: '% No Answered',
     dataIndex: 'noAnsweredPercent',
     key: 'noAnsweredPercent',
+    align: 'center',
+    render: text => text && text + '%'
   },
 
   {

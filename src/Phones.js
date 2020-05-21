@@ -14,6 +14,37 @@ class Phones extends Component {
     data: {}
   };
 
+  componentDidMount(){
+
+    apiReceptivos.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        telefones: {
+          ...prev.telefones,
+          receptivos: res.data.receptivos
+        }
+      })))
+      .catch(err => console.warn(err));
+
+
+      apiCallbacks.get('/', (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => this.setState((prev, props) => ({
+          telefones: {
+            ...prev.telefones,
+            callbacks: res.data.callbacks
+          }
+        })))
+        .catch(err => console.warn(err));
+
+  }
+
+  handleSubmit = e => {
+
+  }
+
   handleDelete = (data) => {
     if(data.campanha.toLowerCase().includes('callback'))
       apiCallbacks.delete(`/apagar/${data._id}`);
@@ -157,33 +188,6 @@ class Phones extends Component {
     }
   
   ];
-
-  componentDidMount(){
-
-    apiReceptivos.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        telefones: {
-          ...prev.telefones,
-          receptivos: res.data.receptivos
-        }
-      })))
-      .catch(err => console.warn(err));
-
-
-      apiCallbacks.get('/', (req, res) => {
-        res.send(req.data)
-      })
-        .then(res => this.setState((prev, props) => ({
-          telefones: {
-            ...prev.telefones,
-            callbacks: res.data.callbacks
-          }
-        })))
-        .catch(err => console.warn(err));
-
-  }
 
   render(){
     // const { getFieldDecorator } = this.props.form;

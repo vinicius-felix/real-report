@@ -1,7 +1,8 @@
 import axios from 'axios';
+const config = require('./api_link');
 
 const apiReceptivos = axios.create({
-  baseURL: 'http://localhost:3000/receptivos',
+  baseURL: config.API + '/receptivos',
 });
 
 export default apiReceptivos;

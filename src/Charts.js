@@ -31,17 +31,17 @@ class Charts extends Component{
     const env4 = getEnv(this.state.dt, 4);
 
     // Quebrando os objs por tipos de rotas dos ambientes
-    const env1KMG = getKMG(env1);    
-    const env1AMD = getAMD(env1);
+    // const env1KMG = getKMG(env1);    
+    // const env1AMD = getAMD(env1);
 
-    const env2KMG = getKMG(env2);    
-    const env2AMD = getAMD(env2);
+    // const env2KMG = getKMG(env2);    
+    // const env2AMD = getAMD(env2);
 
-    const env3KMG = getKMG(env3);    
-    const env3AMD = getAMD(env3);
+    // const env3KMG = getKMG(env3);    
+    // const env3AMD = getAMD(env3);
 
-    const env4KMG = getKMG(env4);    
-    const env4AMD = getAMD(env4);
+    // const env4KMG = getKMG(env4);    
+    // const env4AMD = getAMD(env4);
 
     return(      
       <MainLayout content={
@@ -63,39 +63,70 @@ class Charts extends Component{
           
           <div>
             <div style={{paddingBottom: 150}}>
-              <EnvCharts envName={'Ambiente 1 - Quantitativo'} dataSource={env1} uId={'amb1'} />
-              <EnvChartsPercent envName={'Ambiente 1 - Percentual'} dataSource={env1} uId={'amb1Percent'} />
-              <Row style={{paddingTop: 30}}>
+              <Row>
+                <Col span={12}>
+                  <EnvChartsPercent envName={'Ambiente 1 - Percentual'} dataSource={env1} uId={'amb1Percent'} />
+                </Col>
+
+                <Col span={12}>
+                  <EnvCharts envName={'Ambiente 1 - Quantitativo'} dataSource={env1} uId={'amb1'} />
+                </Col>
+              </Row>
+              
+              {/* <Row style={{paddingTop: 30}}>
                 <EnvCharts envName={'KMG'} dataSource={env1KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb1-KMG'} />
                 <EnvCharts envName={'AMD'} dataSource={env1AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb1-AMD'} />
-              </Row>
+              </Row> */}
             </div>
 
             <div style={{paddingBottom: 150}}>
-              <EnvCharts envName={'Ambiente 2 - Quantitativo'} dataSource={env2} uId={'amb2'}/>
-              <EnvChartsPercent envName={'Ambiente 2 - Percentual'} dataSource={env1} uId={'amb2Percent'} />
-              <Row style={{paddingTop: 30}}>
+              <Row>
+                <Col span={12}>
+                  <EnvChartsPercent envName={'Ambiente 2 - Percentual'} dataSource={env2} uId={'amb2Percent'} />
+                </Col>
+
+                <Col span={12}>
+                  <EnvCharts envName={'Ambiente 2 - Quantitativo'} dataSource={env2} uId={'amb2'} />
+                </Col>
+              </Row>
+              {/* <Row style={{paddingTop: 30}}>
                 <EnvCharts envName={'KMG'} dataSource={env2KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb2-KMG'} />
                 <EnvCharts envName={'AMD'} dataSource={env2AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb2-AMD'} />
-              </Row>
+              </Row> */}
             </div>
 
             <div style={{paddingBottom: 150}}>
-              <EnvCharts envName={'Ambiente 3 - Quantitativo'} dataSource={env3} uId={'amb3'} />
-              <EnvChartsPercent envName={'Ambiente 3 - Percentual'} dataSource={env1} uId={'amb3Percent'} />
-              <Row style={{paddingTop: 30}}>
+              <Row>
+                <Col span={12}>
+                  <EnvChartsPercent envName={'Ambiente 3 - Percentual'} dataSource={env3} uId={'amb3Percent'} />
+                </Col>
+
+                <Col span={12}>
+                  <EnvCharts envName={'Ambiente 3 - Quantitativo'} dataSource={env3} uId={'amb3'} />
+                </Col>
+              </Row>
+              
+              {/* <Row style={{paddingTop: 30}}>
                 <EnvCharts envName={'KMG'} dataSource={env3KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb3-KMG'} />
                 <EnvCharts envName={'AMD'} dataSource={env3AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb3-AMD'} />
-              </Row>
+              </Row> */}
             </div>
 
             <div style={{paddingBottom: 150}}>
-              <EnvCharts envName={'Ambiente 4 - Quantitativo'} dataSource={env4} uId={'amb4'} />
-              <EnvChartsPercent envName={'Ambiente 4 - Percentual'} dataSource={env1} uId={'amb4Percent'} />
-              <Row style={{paddingTop: 30}}>
+              <Row>
+                <Col span={12}>
+                  <EnvChartsPercent envName={'Ambiente 4 - Percentual'} dataSource={env4} uId={'amb4Percent'} />
+                </Col>
+
+                <Col span={12}>
+                  <EnvCharts envName={'Ambiente 4 - Quantitativo'} dataSource={env4} uId={'amb4'} />
+                </Col>
+              </Row>
+
+              {/* <Row style={{paddingTop: 30}}>
                 <EnvCharts envName={'KMG'} dataSource={env4KMG} colSpan={12} colWidth={400} colHeight={200} uId={'amb4-KMG'} />
                 <EnvCharts envName={'AMD'} dataSource={env4AMD} colSpan={12} colWidth={400} colHeight={200} uId={'amb4-AMD'} />
-              </Row>
+              </Row> */}
             </div>
 
           </div>
@@ -113,11 +144,11 @@ const CustomizedAxisTick = (props) => (
 
 const EnvCharts = (props) => (
   <div>
-    <Col span={props.colSpan || 24}>
+    <Col span={props.colSpan || 24} style={{marginBottom: 20}}>
       <div style={{ marginLeft: 60 }}><h2>{props.envName}</h2></div>
-      <BarChart isAnimationActive={false} width={props.colWidth || 800} height={props.colHeight || 300} data={props.dataSource} margin={marginChart} syncId={props.uId} >
+      <BarChart isAnimationActive={false} width={props.colWidth || 600} height={props.colHeight || 300} data={props.dataSource} margin={marginChart} syncId={props.uId} >
         <CartesianGrid strokeDasharray='3 3'  />
-        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={50} width={10} interval={0} />
+        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={130} width={10} interval={0} />
         <YAxis />
         <Tooltip />
         {/* <Legend /> */}
@@ -134,9 +165,9 @@ const EnvChartsPercent = (props) => (
   <div>
     <Col span={props.colSpan || 24}>
       <div style={{ marginLeft: 60 }}><h2>{props.envName}</h2></div>
-      <BarChart isAnimationActive={false} width={props.colWidth || 800} height={props.colHeight || 300} data={props.dataSource} margin={marginChart} syncId={props.uId} >
+      <BarChart isAnimationActive={false} width={props.colWidth || 600} height={props.colHeight || 300} data={props.dataSource} margin={marginChart} syncId={props.uId} >
         <CartesianGrid strokeDasharray='3 3'  />
-        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={50} width={10} interval={0} />
+        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={130} width={10} interval={0} />
         <YAxis />
         <Tooltip />
         {/* <Legend /> */}
