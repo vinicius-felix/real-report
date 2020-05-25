@@ -42,7 +42,8 @@ class Phones extends Component {
   }
 
   handleSubmit = e => {
-
+    console.log('e', e)
+    
   }
 
   handleDelete = (data) => {

@@ -1,9 +1,20 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, DatePicker } from 'antd';
+import { Table, Row, Col, DatePicker, Input } from 'antd';
+import { AudioOutlined } from '@ant-design/icons';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import { transformToJSON } from './utils';
 import moment from 'moment';
+
+const { Search } = Input;
+const suffix = (
+  <AudioOutlined
+    style={{
+      fontSize: 16,
+      color: '#1890ff',
+    }}
+  />
+);
 
 const columns = [
   {
@@ -18,7 +29,7 @@ const columns = [
   {
     title: 'Amb',
     dataIndex: 'Ambiente',
-    key: 'ambiente',    
+    key: 'ambiente',
     sorter: (a, b) => a.Ambiente - b.Ambiente,
     align: 'center',
   },
@@ -36,6 +47,7 @@ const columns = [
     dataIndex: 'Answered',
     key: 'answered',
     align: 'center',
+    sorter: (a, b) => a.Answered - b.Answered,
   },
 
   {
@@ -43,6 +55,7 @@ const columns = [
     dataIndex: 'Failed',
     key: 'failed',
     align: 'center',
+    sorter: (a, b) => a.Failed - b.Failed,
   },
 
   {
@@ -50,6 +63,7 @@ const columns = [
     dataIndex: 'Busy',
     key: 'busy',
     align: 'center',
+    sorter: (a, b) => a.Busy - b.Busy,
   },
 
   {
@@ -57,6 +71,7 @@ const columns = [
     dataIndex: 'noAnswered',
     key: 'noAnswered',
     align: 'center',
+    sorter: (a, b) => a.noAnswered - b.noAnswered,
   },
 
   {
@@ -64,6 +79,7 @@ const columns = [
     dataIndex: 'answeredPercent',
     key: 'answeredPercent',
     align: 'center',
+    sorter: (a, b) => a.answeredPercent - b.answeredPercent,
     render: text => text && text + '%'
   },
 
@@ -72,6 +88,7 @@ const columns = [
     dataIndex: 'failedPercent',
     key: 'failedPercent',
     align: 'center',
+    sorter: (a, b) => a.failedPercent - b.failedPercent,
     render: text => text && text + '%'
   },
 
@@ -80,6 +97,7 @@ const columns = [
     dataIndex: 'busyPercent',
     key: 'busyPercent',
     align: 'center',
+    sorter: (a, b) => a.busyPercent - b.busyPercent,
     render: text => text && text + '%'
   },
 
@@ -88,6 +106,7 @@ const columns = [
     dataIndex: 'noAnsweredPercent',
     key: 'noAnsweredPercent',
     align: 'center',
+    sorter: (a, b) => a.noAnsweredPercent - b.noAnsweredPercent,
     render: text => text && text + '%'
   },
 
@@ -95,6 +114,7 @@ const columns = [
     title: 'Total',
     dataIndex: 'Total',
     key: 'total',
+    sorter: (a, b) => a.Total - b.Total,
   }
 
 ];
@@ -112,8 +132,17 @@ class App extends Component {
   }
 
   filterByDay = (day) => {
-    let obj = transformToJSON();
+    console.log("day", day)
+    const obj = transformToJSON();
+    // const obj = this.state.dt
     let filtered = obj && obj.filter( function(elem) { return moment(elem.Data).format('DD/MM/YYYY') === day } )
+    return filtered;
+  }
+
+  filterByName = name => {
+    // const obj = this.state && this.state.dt
+    const obj = transformToJSON();
+    let filtered = obj.filter( function(elem){ return elem.Nome_Rota.toLowerCase().includes(name.toLowerCase()) } )
     return filtered;
   }
 
@@ -133,12 +162,22 @@ class App extends Component {
             <Row style={{margin: 16}}>
               <Col style={{padding: 2, marginRight: 5}}> <h3><b>Filtrar Data:</b></h3> </Col>
               <Col>
-                <DatePicker allowClear={false} defaultValue={moment(today, dateFormat)} format={dateFormat} onChange={ (e) => this.setState({dt: this.filterByDay(moment(e).format('DD/MM/YYYY'))}) } />
+                <DatePicker allowClear defaultValue={moment(today, dateFormat)} format={dateFormat} onChange={ (e) => this.setState({dt: this.filterByDay(moment(e).format('DD/MM/YYYY'))}) } />
+              </Col>
+
+              <Col>
+                <Search
+                  placeholder="input search text"
+                  onSearch={value => this.setState({ dt: this.filterByName(value) })}
+                  onChange={(e) => this.setState({ dt: this.filterByName(e.target.value) })}
+                  style={{ width: 200 }}
+                />
               </Col>
             </Row>
             <Table rowKey='RowID' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }}  dataSource={this.state.dt} columns={columns} onChange={this.handleChange} pagination={pagination} />
           </div>
         } />
+        {console.log(this.state)}
       </Row>
     );
   }

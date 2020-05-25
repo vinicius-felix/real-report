@@ -3,7 +3,7 @@ import 'antd/dist/antd.css';
 import { MainLayout } from './MainLayout';
 import { Row, Col, DatePicker } from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
-import { transformToJSON, getEnv, getKMG, getAMD, getPercentual } from './utils';
+import { transformToJSON, getEnv } from './utils';
 import moment from 'moment';
 
 const marginChart = { top: 5, right: 3, left: 3, bottom: 5 }
