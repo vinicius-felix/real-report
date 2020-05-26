@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { MainLayout } from './MainLayout';
 import { Row, Col, DatePicker } from 'antd';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import { transformToJSON, getEnv } from './utils';
 import moment from 'moment';
 
@@ -148,14 +148,14 @@ const EnvCharts = (props) => (
       <div style={{ marginLeft: 60 }}><h2>{props.envName}</h2></div>
       <BarChart isAnimationActive={false} width={props.colWidth || 600} height={props.colHeight || 300} data={props.dataSource} margin={marginChart} syncId={props.uId} >
         <CartesianGrid strokeDasharray='3 3'  />
-        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={130} width={10} interval={0} />
+        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={155} width={10} interval={0} />
         <YAxis />
         <Tooltip />
-        {/* <Legend /> */}
+        <Legend />
         <Bar dataKey='Answered' fill='#12b33d' />
         <Bar dataKey='Failed' fill='#c91616' />
         <Bar dataKey='noAnswered' fill='#1f48db' />
-        <Bar dataKey='Busy' fill='#e0a328' />
+        <Bar dataKey='Busy' fill='#303030' />
       </BarChart>
     </Col>
   </div>
@@ -167,14 +167,14 @@ const EnvChartsPercent = (props) => (
       <div style={{ marginLeft: 60 }}><h2>{props.envName}</h2></div>
       <BarChart isAnimationActive={false} width={props.colWidth || 600} height={props.colHeight || 300} data={props.dataSource} margin={marginChart} syncId={props.uId} >
         <CartesianGrid strokeDasharray='3 3'  />
-        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={130} width={10} interval={0} />
+        <XAxis dataKey='Nome_Rota' style={{fontSize: 11}} tick={<CustomizedAxisTick />} height={155} width={10} interval={0} />
         <YAxis />
         <Tooltip />
-        {/* <Legend /> */}
+        <Legend />
         <Bar dataKey='answeredPercent' fill='#12b33d' />
         <Bar dataKey='failedPercent' fill='#c91616' />
         <Bar dataKey='noAnsweredPercent' fill='#1f48db' />
-        <Bar dataKey='busyPercent' fill='#e0a328' />
+        <Bar dataKey='busyPercent' fill='#303030' />
       </BarChart>
     </Col>
   </div>
