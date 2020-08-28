@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import Routes from './Routes';
+import Cost from './Cost';
 import Phones from './Phones';
 import Charts from './Charts';
 import NotFoundPage from './NotFoundPage';
@@ -12,6 +13,7 @@ ReactDOM.render(<BrowserRouter>
   <Switch>
     <Route exact path='/' component={App} />
     <Route exact path='/routes' component={Routes} />
+    <Route exact path='/cost' component={Cost} />
     <Route exact path='/phones' component={Phones} />
     <Route exact path='/charts' component={Charts} />
     <Route path='*' component={NotFoundPage} />

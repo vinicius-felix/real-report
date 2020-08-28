@@ -9,7 +9,8 @@ import 'antd/dist/antd.css';
 class Phones extends Component {
 
   state = {
-    visible: false,
+    visibleEditModal: false,
+    visibleAddModal: false,
     form: {},
     data: {}
   };
@@ -60,13 +61,14 @@ class Phones extends Component {
   }
 
 
-  onOkModalReceptivo = () => {
-    const { receptivos } = this.state.telefones;
-    apiReceptivos.put(`/atualiza/${receptivos._id}`, receptivos);
+  onOkModalReceptivo = (e) => {
+    // const { receptivos } = this.state.telefones;
+    // console.log("rec", e.target)
+    //apiReceptivos.put(`/atualiza/${receptivos._id}`, receptivos);
     //document.location.reload(true);
   };
 
-  onOkModalReceptivo = () => {
+  onOkModalCallback = () => {
     const { callback } = this.state.telefones;
     apiCallbacks.put(`/atualiza/${callback._id}`, callback);
     //document.location.reload(true);
@@ -74,15 +76,17 @@ class Phones extends Component {
 
   onCancelModal = () => {
     this.setState({ 
-      visible: false
+      visibleAddModal: false,
+      visibleEditModal: false
     });
   }
 
   onEdit = (id) => {
     apiReceptivos.get(`/exibir/${id}`)
       .then(res => {
+        console.log('res',res)
         this.setState({
-          form: res.telefones.receptivos
+          form: res.data.receptivo
         });
       })
       .catch(err => console.warn(err));
@@ -97,13 +101,14 @@ class Phones extends Component {
   handleEdit = (id) => {
     this.onEdit(id);
     this.setState({
-      visible: true
+      visibleEditModal: true
     });
   };
 
-  handleAdd = () => {
+  handleAdd = (e) => {
+    console.log("E:", e.target.value)
     this.setState({
-      visible: true
+      visibleAddModal: true
     });
   }
 
@@ -173,7 +178,7 @@ class Phones extends Component {
       align: 'center',
       render: (textColumn, record) => (
         <span>
-          <Button style={{width: 30, textAlign: 'center'}} type='primary' size='small' onClick={() => this.handleEdit(textColumn._id)} ghost>
+          <Button style={{width: 30, textAlign: 'center'}} type='primary' size='small' onClick={() => this.handleEdit(record._id)} ghost>
             <EditOutlined style={{color: 'gray'}} />
           </Button>
   
@@ -191,15 +196,7 @@ class Phones extends Component {
   ];
 
   render(){
-    // const { getFieldDecorator } = this.props.form;
-    // const formItemLayout = {
-    //   labelCol: {
-    //     span: 5
-    //   },
-    //   wrapperCol: {
-    //     span: 13
-    //   }
-    // };
+
     const layout = {
       labelCol: { span: 5 },
       wrapperCol: { span: 16 },
@@ -212,7 +209,7 @@ class Phones extends Component {
           <Col>
           <Row style={{paddingTop: 30, marginLeft: 10}}>
               <Card title='Receptivos' extra={
-                <Button onClick={this.handleAdd}>
+                <Button onClick={(e) => this.handleAdd(e)}>
                   <PlusOutlined />
                   Adicionar Receptivo
                 </Button>
@@ -236,8 +233,12 @@ class Phones extends Component {
           </div>
         } />
 
-        <Modal title={'Editar Receptivo'} visible={this.state.visible} onOk={this.onOkModalReceptivo} onCancel={this.onCancelModal}>
-
+        <Modal 
+          title={'Adicionar'} 
+          visible={this.state.visibleAddModal} 
+          onOk={(e) => this.onOkModalReceptivo(e)} 
+          onCancel={this.onCancelModal}
+        >
           <Form {...layout}>
             <Form.Item id='campanha' name='campanha' label='Campanha' rules={[{ required: true }]} >
               <Input placeholder='Campanha' />
@@ -271,63 +272,53 @@ class Phones extends Component {
               <Input placeholder='carteira' />
             </Form.Item>
           </Form>
-
-          {/* <Form {...formItemLayout} onSubmit={this.handleSubmit} >
-
-            <Form.Item name='Campanha' rules={[{required: true}]}>
-              <Input />
-            </Form.Item>
-
-            <Form.Item label={'Campanha'}>
-              {getFieldDecorator('campanha', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Nome da Campanha'} />)}
-            </Form.Item>
-
-            <Form.Item label={'Status'}>
-              {getFieldDecorator('status', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Status'} />)}
-            </Form.Item>
-
-            <Form.Item label={'Servidor'}>
-              {getFieldDecorator('servidor', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={10} />)}
-            </Form.Item>
-
-            <Form.Item label={'Receptivo'}>
-              {getFieldDecorator('receptivo', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Nome do Receptivo'} />)}
-            </Form.Item>
-
-            <Form.Item label={'Operadora'}>
-              {getFieldDecorator('operadora', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Nome da Operadora'} />)}
-            </Form.Item>
-
-            <Form.Item label={'DAC'}>
-              {getFieldDecorator('dac', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Link do DAC'} />)}
-            </Form.Item>
-
-            <Form.Item label={'Cockpit'}>
-              {getFieldDecorator('cockpit', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Link do Cockpit'} />)}
-            </Form.Item>
-
-            <Form.Item label={'Carteira'}>
-              {getFieldDecorator('carteira', {
-                initialValue: this.state.form && this.state.form.value, rules: [{ required: true, message: 'Este campo é obrigatório!' }],
-              })(<Input onChange={this.onChange} placeholder={'Nome da Carteira'} />)}
-            </Form.Item>
-          </Form> */}
-
         </Modal>
+
+
+        <Modal 
+          title={'Editar'}          
+          visible={this.state.visibleEditModal} 
+          onOk={this.onOkModalReceptivo} 
+          onCancel={this.onCancelModal}
+        >
+          <Form {...layout} initialValues={
+            { data: this.state.form }
+          }>
+            <Form.Item id='data.campanha' name='campanha' label='Campanha' rules={[{ required: true }]} >
+              <Input placeholder='Campanha' />
+            </Form.Item>
+
+            <Form.Item id='status' name='status' label='status' rules={[{ required: true }]}>
+              <Input placeholder='status' />
+            </Form.Item>
+
+            <Form.Item id='servidor' name='servidor' label='servidor' rules={[{ required: true }]}>
+              <Input placeholder='servidor' />
+            </Form.Item>
+
+            <Form.Item id='receptivo' name='receptivo' label='receptivo' rules={[{ required: true }]}>
+              <Input placeholder='receptivo' />
+            </Form.Item>
+
+            <Form.Item id='operadora' name='operadora' label='operadora' rules={[{ required: true }]}>
+              <Input placeholder='operadora' />
+            </Form.Item>
+
+            <Form.Item id='dac' name='dac' label='dac' rules={[{ required: true }]}>
+              <Input placeholder='dac' />
+            </Form.Item>
+
+            <Form.Item id='cockpit' name='cockpit' label='cockpit' rules={[{ required: true }]}>
+              <Input placeholder='cockpit' />
+            </Form.Item>
+
+            <Form.Item id='carteira' name='carteira' label='carteira' rules={[{ required: true }]}>
+              <Input placeholder='carteira' />
+            </Form.Item>
+          </Form>
+        </Modal>
+
+
         {console.log(this.state)}
         
       </Row>
@@ -335,8 +326,4 @@ class Phones extends Component {
   }
 }
 
-
-
 export default Phones;
-// const WrappedHistoryPhone = Form.create()(Phones);
-// export default WrappedHistoryPhone;
