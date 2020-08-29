@@ -57,14 +57,14 @@ const MainLayoutSite = (props) => (
           <Col span={5} />
         </Row>
 
-        <Row key="data" style={paddingAll}>
+        <Row key="cost" style={paddingAll}>
           <Col span={2} />
           <Col span={4}><DollarOutlined style={{color: 'red', fontSize: 25}} /></Col>
           <Col span={10}><Link style={{color: 'white'}} to="/cost">Custos</Link></Col>            
           <Col span={5} />
         </Row>
 
-        <Row key="data" style={paddingAll}>
+        <Row key="routes" style={paddingAll}>
           <Col span={2} />
           <Col span={4}><NodeIndexOutlined style={{color: 'red', fontSize: 25}} /></Col>
           <Col span={10}><Link style={{color: 'white'}} to="/routes">Rotas</Link></Col>            
