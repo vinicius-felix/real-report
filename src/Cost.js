@@ -23,6 +23,7 @@ class Cost extends Component {
     dt: [
       {
         id: 1,
+        hora: '7h as 8h',
         ambiente_1: 'R$ 100,00',
         ambiente_2: 'R$ 100,00',
         ambiente_3: 'R$ 100,00',
@@ -37,6 +38,7 @@ class Cost extends Component {
 
       {
         id:2,
+        hora: '8h as 9h',
         ambiente_1: 'R$ 200,00',
         ambiente_2: 'R$ 200,00',
         ambiente_3: 'R$ 200,00',
@@ -51,6 +53,7 @@ class Cost extends Component {
 
       {
         id: 3,
+        hora: '9h as 10h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -66,6 +69,13 @@ class Cost extends Component {
   }  
 
   columns = [
+    {
+      title: 'Hora',
+      dataIndex: 'hora',
+      key: 'hora',
+      align: 'center'
+    },
+
     {
       title: 'Ambiente 1',
       dataIndex: 'ambiente_1',
