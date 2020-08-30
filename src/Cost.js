@@ -7,7 +7,7 @@ import moment from 'moment';
 const { Title } = Typography;
 
 const gridTable = { 
-  marginLeft: '3%',
+  marginLeft: '2%',
   width: '100%', 
   textAlign: 'center' 
 };
@@ -30,10 +30,7 @@ class Cost extends Component {
         ambiente_4: 'R$ 100,00',
         total_ambiente: 'R$ 100,00',
         olos: 'R$ 100,00',
-        baldussi_d1: 'R$ 100,00',
-        pabx_baldussi: 'R$ 1000,00',
-        ag_virtual_tentec: 'R$ 1000,00',
-        ag_virtual_ypy: 'R$ 1000,00'
+        baldussi_d1: 'R$ 100,00'
       },
 
       {
@@ -45,10 +42,7 @@ class Cost extends Component {
         ambiente_4: 'R$ 200,00',
         total_ambiente: 'R$ 200,00',
         olos: 'R$ 200,00',
-        baldussi_d1: 'R$ 200,00',
-        pabx_baldussi: 'R$ 2000,00',
-        ag_virtual_tentec: 'R$ 2000,00',
-        ag_virtual_ypy: 'R$ 2000,00'
+        baldussi_d1: 'R$ 200,00'
       },
 
       {
@@ -60,12 +54,148 @@ class Cost extends Component {
         ambiente_4: 'R$ 300,00',
         total_ambiente: 'R$ 300,00',
         olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00',
-        pabx_baldussi: 'R$ 3000,00',
-        ag_virtual_tentec: 'R$ 3000,00',
-        ag_virtual_ypy: 'R$ 3000,00'
+        baldussi_d1: 'R$ 300,00'
       },
-    ]
+
+      {
+        id: 3,
+        hora: '10h as 11h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '11h as 12h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '12h as 13h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '13h as 14h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '14h as 15h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '15h as 16h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '16h as 17h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '17h as 18h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '18h as 19h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '19h as 20h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      },
+
+      {
+        id: 3,
+        hora: '20h as 21h',
+        ambiente_1: 'R$ 300,00',
+        ambiente_2: 'R$ 300,00',
+        ambiente_3: 'R$ 300,00',
+        ambiente_4: 'R$ 300,00',
+        total_ambiente: 'R$ 300,00',
+        olos: 'R$ 300,00',
+        baldussi_d1: 'R$ 300,00'
+      }
+    ],
+    pabx: {
+      baldussi: 'R$ 1000,00'
+    },
+    av: {
+      tentec: 'R$ 2000,00',
+      ypy: 'R$ 3000,00'
+    }
   }  
 
   columns = [
@@ -143,22 +273,22 @@ class Cost extends Component {
               columns={this.columns} 
               pagination={false}
             />            
-            <Row style={{...gridTable, paddingTop: 50}}>
+            <Row style={{...gridTable, paddingTop: 20}}>
               <Col span={8}>
                 <Card title='PABX - Baldussi'>
-                  <Card.Grid style={gridStyle} hoverable={false} >{'R$ 500,00'}</Card.Grid>
+                  <Card.Grid style={gridStyle} hoverable={false} >{this.state.pabx.baldussi}</Card.Grid>
                 </Card>
               </Col>
 
               <Col span={8}>
                 <Card title='Ag. Virtual - TenTec'>
-                  <Card.Grid style={gridStyle} hoverable={false} >{'R$ 500,00'}</Card.Grid>
+                  <Card.Grid style={gridStyle} hoverable={false} >{this.state.av.tentec}</Card.Grid>
                 </Card>
               </Col>
 
               <Col span={8}>
                 <Card title='Ag. Virtual - Ypy'>
-                  <Card.Grid style={gridStyle} hoverable={false} >{'R$ 500,00'}</Card.Grid>
+                  <Card.Grid style={gridStyle} hoverable={false} >{this.state.av.ypy}</Card.Grid>
                 </Card>
               </Col>
             </Row>

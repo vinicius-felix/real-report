@@ -10,7 +10,8 @@ class Phones extends Component {
 
   state = {
     visibleEditModal: false,
-    visibleAddModal: false,
+    visibleAddModalRecep: false,
+    visibleAddModalCall: false,
     form: {},
     data: {}
   };
@@ -39,44 +40,42 @@ class Phones extends Component {
           }
         })))
         .catch(err => console.warn(err));
-
   }
 
-  handleSubmit = e => {
-    console.log('e', e)
-    
+  handleDelete = (data) => {    
+    apiReceptivos.delete(`/apagar/${data._id}`);    
   }
 
-  handleDelete = (data) => {
-    if(data.campanha.toLowerCase().includes('callback'))
-      apiCallbacks.delete(`/apagar/${data._id}`);
-    else
-      apiReceptivos.delete(`/apagar/${data._id}`);
+  handleDeleteCall = (data) => {      
+    apiCallbacks.delete(`/apagar/${data._id}`);
   }
 
-  onConfirm = async (data) => {
+  onConfirm = async (id) => {
+    message.success('Alterado com sucesso');
+    await this.handleDelete(id);
+    document.location.reload(true);
+  };
+
+  onConfirmCall = async (data) => {
     message.success('Registro removido com sucesso!');
-    await this.handleDelete(data);
-    //document.location.reload(true);
+    await this.handleDeleteCall(data);
+    document.location.reload(true);
   }
-
 
   onOkModalReceptivo = (e) => {
-    // const { receptivos } = this.state.telefones;
-    // console.log("rec", e.target)
-    //apiReceptivos.put(`/atualiza/${receptivos._id}`, receptivos);
-    //document.location.reload(true);
+    const { form } = this.state;
+    console.log('onOkModalReceptivo form', form)
   };
 
   onOkModalCallback = () => {
     const { callback } = this.state.telefones;
     apiCallbacks.put(`/atualiza/${callback._id}`, callback);
-    //document.location.reload(true);
   };
 
   onCancelModal = () => {
     this.setState({ 
-      visibleAddModal: false,
+      visibleAddModalRecep: false,
+      visibleAddModalCall: false,
       visibleEditModal: false
     });
   }
@@ -92,11 +91,7 @@ class Phones extends Component {
       .catch(err => console.warn(err));
   };
 
-  onConfirm = async (id) => {
-    message.success('Alterado com sucesso');
-    await this.handleDelete(id);
-    document.location.reload(true);
-  };
+  
 
   handleEdit = (id) => {
     this.onEdit(id);
@@ -105,10 +100,15 @@ class Phones extends Component {
     });
   };
 
-  handleAdd = (e) => {
-    console.log("E:", e.target.value)
+  handleAddRecep = (e) => {
     this.setState({
-      visibleAddModal: true
+      visibleAddModalRecep: true
+    });
+  }
+
+  handleAddCall = (e) => {
+    this.setState({
+      visibleAddModalCall: true
     });
   }
 
@@ -121,6 +121,20 @@ class Phones extends Component {
         [key]: value
       }
     }));
+  };
+
+  handleSubmit = e => {
+    const { form } = this.state
+    e.preventDefault();    
+    apiReceptivos.post('/registrar', form);
+    document.location.reload(true);
+  };
+
+  handleSubmitCall = e => {
+    const { form } = this.state
+    e.preventDefault();    
+    apiCallbacks.post('/registrar', form);
+    document.location.reload(true);
   };
 
   columns = [
@@ -191,8 +205,78 @@ class Phones extends Component {
           </Popconfirm>
         </span>
       )
-    }
+    }  
+  ];
+
+  columnsCall = [
+    {
+      title: 'Campanha',
+      dataIndex: 'campanha',
+      key: 'campanha'
+    },
   
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status'
+    },
+  
+    {
+      title: 'Servidor',
+      dataIndex: 'servidor',
+      key: 'servidor'
+    },
+  
+    {
+      title: 'Receptivo',
+      dataIndex: 'receptivo',
+      key: 'receptivo'
+    },
+  
+    {
+      title: 'Operadora',
+      dataIndex: 'operadora',
+      key: 'operadora'
+    },
+  
+    {
+      title: 'DAC',
+      dataIndex: 'dac',
+      key: 'dac'
+    },
+  
+    {
+      title: 'CockPit',
+      dataIndex: 'cockpit',
+      key: 'cockpit'
+    },
+  
+    {
+      title: 'Carteira',
+      dataIndex: 'carteira',
+      key: 'carteira'
+    },
+  
+    {
+      key: 'actions',
+      title: 'Ações',
+      align: 'center',
+      render: (textColumn, record) => (
+        <span>
+          <Button style={{width: 30, textAlign: 'center'}} type='primary' size='small' onClick={() => this.handleEditCall(record._id)} ghost>
+            <EditOutlined style={{color: 'gray'}} />
+          </Button>
+  
+          <Divider type='vertical' />
+  
+          <Popconfirm title='Deseja realmente apagar?' onConfirm={() => this.onConfirmCall(textColumn)} okText='Sim' cancelText='Não'>
+            <Button style={{width: 30, color: 'gray'}} type='primary' size='small' ghost >
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
+        </span>
+      )
+    }  
   ];
 
   render(){
@@ -209,7 +293,7 @@ class Phones extends Component {
           <Col>
           <Row style={{paddingTop: 30, marginLeft: 10}}>
               <Card title='Receptivos' extra={
-                <Button onClick={(e) => this.handleAdd(e)}>
+                <Button onClick={(e) => this.handleAddRecep(e)}>
                   <PlusOutlined />
                   Adicionar Receptivo
                 </Button>
@@ -220,12 +304,12 @@ class Phones extends Component {
 
             <Row style={{paddingTop: 30, marginLeft: 10}}>
               <Card title='Callbacks' extra={
-                <Button onClick={this.handleAdd}>
+                <Button onClick={(e) => this.handleAddCall(e)}>
                   <PlusOutlined />
                   Adicionar Callback
                 </Button>
               }>
-                <Table rowKey='_id' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }} dataSource={this.state.telefones && this.state.telefones.callbacks} columns={this.columns} pagination={false} />
+                <Table rowKey='_id' size='small' style={{ marginLeft: '3%', width: '100%', textAlign: 'center' }} dataSource={this.state.telefones && this.state.telefones.callbacks} columns={this.columnsCall} pagination={false} />
               </Card>
             </Row>
           </Col>
@@ -235,11 +319,11 @@ class Phones extends Component {
 
         <Modal 
           title={'Adicionar'} 
-          visible={this.state.visibleAddModal} 
-          onOk={(e) => this.onOkModalReceptivo(e)} 
+          visible={this.state.visibleAddModalRecep} 
+          onOk={e => this.handleSubmit(e)}
           onCancel={this.onCancelModal}
         >
-          <Form {...layout}>
+          <Form {...layout} onChange={this.onChange}>
             <Form.Item id='campanha' name='campanha' label='Campanha' rules={[{ required: true }]} >
               <Input placeholder='Campanha' />
             </Form.Item>
@@ -273,7 +357,6 @@ class Phones extends Component {
             </Form.Item>
           </Form>
         </Modal>
-
 
         <Modal 
           title={'Editar'}          
@@ -318,9 +401,89 @@ class Phones extends Component {
           </Form>
         </Modal>
 
+        <Modal 
+          title={'Adicionar'} 
+          visible={this.state.visibleAddModalCall}
+          onOk={e => this.handleSubmitCall(e)}
+          onCancel={this.onCancelModal}
+        >
+          <Form {...layout} onChange={this.onChange}>
+            <Form.Item id='campanha' name='campanha' label='Campanha' rules={[{ required: true }]} >
+              <Input placeholder='Campanha' />
+            </Form.Item>
 
-        {console.log(this.state)}
+            <Form.Item id='status' name='status' label='status' rules={[{ required: true }]}>
+              <Input placeholder='status' />
+            </Form.Item>
+
+            <Form.Item id='servidor' name='servidor' label='servidor' rules={[{ required: true }]}>
+              <Input placeholder='servidor' />
+            </Form.Item>
+
+            <Form.Item id='receptivo' name='receptivo' label='receptivo' rules={[{ required: true }]}>
+              <Input placeholder='receptivo' />
+            </Form.Item>
+
+            <Form.Item id='operadora' name='operadora' label='operadora' rules={[{ required: true }]}>
+              <Input placeholder='operadora' />
+            </Form.Item>
+
+            <Form.Item id='dac' name='dac' label='dac' rules={[{ required: true }]}>
+              <Input placeholder='dac' />
+            </Form.Item>
+
+            <Form.Item id='cockpit' name='cockpit' label='cockpit' rules={[{ required: true }]}>
+              <Input placeholder='cockpit' />
+            </Form.Item>
+
+            <Form.Item id='carteira' name='carteira' label='carteira' rules={[{ required: true }]}>
+              <Input placeholder='carteira' />
+            </Form.Item>
+          </Form>
+        </Modal>
         
+        <Modal 
+          title={'Editar'}          
+          visible={this.state.visibleEditModal} 
+          onOk={this.onOkModalReceptivoCall}
+          onCancel={this.onCancelModal}
+        >
+          <Form {...layout} initialValues={
+            { data: this.state.form }
+          }>
+            <Form.Item id='data.campanha' name='campanha' label='Campanha' rules={[{ required: true }]} >
+              <Input placeholder='Campanha' />
+            </Form.Item>
+
+            <Form.Item id='status' name='status' label='status' rules={[{ required: true }]}>
+              <Input placeholder='status' />
+            </Form.Item>
+
+            <Form.Item id='servidor' name='servidor' label='servidor' rules={[{ required: true }]}>
+              <Input placeholder='servidor' />
+            </Form.Item>
+
+            <Form.Item id='receptivo' name='receptivo' label='receptivo' rules={[{ required: true }]}>
+              <Input placeholder='receptivo' />
+            </Form.Item>
+
+            <Form.Item id='operadora' name='operadora' label='operadora' rules={[{ required: true }]}>
+              <Input placeholder='operadora' />
+            </Form.Item>
+
+            <Form.Item id='dac' name='dac' label='dac' rules={[{ required: true }]}>
+              <Input placeholder='dac' />
+            </Form.Item>
+
+            <Form.Item id='cockpit' name='cockpit' label='cockpit' rules={[{ required: true }]}>
+              <Input placeholder='cockpit' />
+            </Form.Item>
+
+            <Form.Item id='carteira' name='carteira' label='carteira' rules={[{ required: true }]}>
+              <Input placeholder='carteira' />
+            </Form.Item>
+          </Form>
+        </Modal>
       </Row>
     );
   }
