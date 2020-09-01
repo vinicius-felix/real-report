@@ -3,6 +3,7 @@ import { Table, Row, Col, Card, Typography } from 'antd';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import moment from 'moment';
+import apiIP from './Services/service-ip';
 
 const { Title } = Typography;
 
@@ -18,6 +19,16 @@ const gridStyle = {
 };
 
 class Cost extends Component {
+
+  componentDidMount(){
+    apiIP.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => (console.log('res', res), this.setState((prev, props) => ({
+        ip: res.data
+      }))))
+      .catch(err => console.warn(err));
+  }
 
   state = {
     dt: [
@@ -294,6 +305,7 @@ class Cost extends Component {
             </Row>
           </div>
         } />
+        {console.log(this.state)}
       </Row>
     );
   }
