@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, Card, Typography } from 'antd';
+import { Table, Row, Col, Card, Typography, Spin } from 'antd';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import apiIP from './Services/service-ip';
+import apiPABXBaldussi from './Services/service-pabx-baldussi';
+import apiAVTentec from './Services/service-av-tentec';
+import apiAVYpy from './Services/service-av-ypy';
 
 const { Title } = Typography;
 
@@ -20,21 +23,91 @@ const gridStyle = {
 
 class Cost extends Component {
 
+  state = {
+    custos: {}
+  }
+
   componentDidMount(){
+
+    this.setState({
+      loading: {
+        pabxBaldussi: true,
+        avTentec: true,
+        avYpy: true
+      }
+    })
+
+      this.showDataIP();
+      this.showDataPABXBaldussi();
+      this.showDataAVTentec();
+      this.showDataAVYpy();
+  }
+
+  showDataIP = () => {
     apiIP.get('/', (req, res) => {
       res.send(req.data)
     })
-      .then(res => (console.log('res', res), this.setState((prev, props) => ({
+      .then(res => (this.setState((prev, props) => ({
         ip: res.data
       }))))
+      .catch(err => console.warn(err));
+  }
+
+  showDataPABXBaldussi = () => {
+    apiPABXBaldussi.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        custos: {
+          ...prev.custos,
+          pabxBaldussi: res.data.custo
+        },
+        loading: {
+          ...prev.loading,
+          pabxBaldussi: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataAVTentec = () => {
+    apiAVTentec.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        custos: {
+          ...prev.custos,
+          avTentec: res.data.custo
+        },
+        loading: {
+          ...prev.loading,
+          avTentec: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataAVYpy = () => {
+    apiAVYpy.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        custos: {
+          ...prev.custos,
+          avYpy: res.data.custo
+        },
+        loading: {
+          ...prev.loading,
+          avYpy: false
+        }
+      })))
       .catch(err => console.warn(err));
   }
 
   state = {
     dt: [
       {
-        id: 1,
-        hora: '7h as 8h',
+        hora: '7h às 8h',
         ambiente_1: 'R$ 100,00',
         ambiente_2: 'R$ 100,00',
         ambiente_3: 'R$ 100,00',
@@ -45,8 +118,7 @@ class Cost extends Component {
       },
 
       {
-        id:2,
-        hora: '8h as 9h',
+        hora: '8h às 9h',
         ambiente_1: 'R$ 200,00',
         ambiente_2: 'R$ 200,00',
         ambiente_3: 'R$ 200,00',
@@ -57,8 +129,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '9h as 10h',
+        hora: '9h às 10h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -69,8 +140,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '10h as 11h',
+        hora: '10h às 11h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -81,8 +151,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '11h as 12h',
+        hora: '11h às 12h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -93,8 +162,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '12h as 13h',
+        hora: '12h às 13h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -105,8 +173,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '13h as 14h',
+        hora: '13h às 14h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -117,8 +184,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '14h as 15h',
+        hora: '14h às 15h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -129,8 +195,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '15h as 16h',
+        hora: '15h às 16h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -141,8 +206,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '16h as 17h',
+        hora: '16h às 17h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -153,8 +217,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '17h as 18h',
+        hora: '17h às 18h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -165,8 +228,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '18h as 19h',
+        hora: '18h às 19h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -177,8 +239,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '19h as 20h',
+        hora: '19h às 20h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -189,8 +250,7 @@ class Cost extends Component {
       },
 
       {
-        id: 3,
-        hora: '20h as 21h',
+        hora: '20h às 21h',
         ambiente_1: 'R$ 300,00',
         ambiente_2: 'R$ 300,00',
         ambiente_3: 'R$ 300,00',
@@ -199,14 +259,8 @@ class Cost extends Component {
         olos: 'R$ 300,00',
         baldussi_d1: 'R$ 300,00'
       }
-    ],
-    pabx: {
-      baldussi: 'R$ 1000,00'
-    },
-    av: {
-      tentec: 'R$ 2000,00',
-      ypy: 'R$ 3000,00'
-    }
+    ]
+    
   }  
 
   columns = [
@@ -214,7 +268,8 @@ class Cost extends Component {
       title: 'Hora',
       dataIndex: 'hora',
       key: 'hora',
-      align: 'center'
+      align: 'center',
+      render: (text) => (text)
     },
 
     {
@@ -272,12 +327,12 @@ class Cost extends Component {
     return(
       <Row>
         <MainLayout content={
-          <div>
+          <div>          
             <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
               <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') }</Title>
             </Row>
             <Table 
-              rowKey='id' 
+              rowKey='hora' 
               size='small' 
               style={gridTable}
               dataSource={this.state.dt} 
@@ -286,26 +341,32 @@ class Cost extends Component {
             />            
             <Row style={{...gridTable, paddingTop: 20}}>
               <Col span={8}>
-                <Card title='PABX - Baldussi'>
-                  <Card.Grid style={gridStyle} hoverable={false} >{this.state.pabx.baldussi}</Card.Grid>
-                </Card>
+                <Spin spinning={this.state.loading && this.state.loading.pabxBaldussi} >
+                  <Card title='PABX - Baldussi'>
+                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && this.state.custos.pabxBaldussi}</Card.Grid>
+                  </Card>
+                </Spin>
               </Col>
 
               <Col span={8}>
-                <Card title='Ag. Virtual - TenTec'>
-                  <Card.Grid style={gridStyle} hoverable={false} >{this.state.av.tentec}</Card.Grid>
-                </Card>
+                <Spin spinning={this.state.loading && this.state.loading.avTentec} >
+                  <Card title='Ag. Virtual - TenTec'>
+                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && this.state.custos.avTentec}</Card.Grid>
+                  </Card>
+                </Spin>
               </Col>
 
               <Col span={8}>
-                <Card title='Ag. Virtual - Ypy'>
-                  <Card.Grid style={gridStyle} hoverable={false} >{this.state.av.ypy}</Card.Grid>
-                </Card>
+                <Spin spinning={this.state.loading && this.state.loading.avYpy} >
+                  <Card title='Ag. Virtual - Ypy'>
+                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && this.state.custos.avYpy}</Card.Grid>
+                  </Card>
+                </Spin>
               </Col>
             </Row>
           </div>
         } />
-        {console.log(this.state)}
+        {console.log('state', this.state)}
       </Row>
     );
   }
