@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import { Table, Row, Col, Card, Typography, Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import apiIP from './Services/service-ip';
+import apiDiscadorAmbiente1 from './Services/service-discador-ambiente1';
+import apiDiscadorAmbiente2 from './Services/service-discador-ambiente2';
+import apiDiscadorAmbiente3 from './Services/service-discador-ambiente3';
+import apiDiscadorAmbiente4 from './Services/service-discador-ambiente4';
+import apiUras from './Services/service-uras';
+import apiDiscadorOlos from './Services/service-discador-olos';
+import apiDiscadorBaldussi from './Services/service-discador-baldussi';
 import apiPABXBaldussi from './Services/service-pabx-baldussi';
 import apiAVTentec from './Services/service-av-tentec';
 import apiAVYpy from './Services/service-av-ypy';
@@ -23,21 +31,16 @@ const gridStyle = {
 
 class Cost extends Component {
 
-  state = {
-    custos: {}
-  }
-
   componentDidMount(){
 
-    this.setState({
-      loading: {
-        pabxBaldussi: true,
-        avTentec: true,
-        avYpy: true
-      }
-    })
-
       this.showDataIP();
+      this.showDataDiscadorAmbiente1();
+      this.showDataDiscadorAmbiente2();
+      this.showDataDiscadorAmbiente3();
+      this.showDataDiscadorAmbiente4();
+      this.showDataURAs();
+      this.showDataOlos();
+      this.showDataDiscadorBaldussi();
       this.showDataPABXBaldussi();
       this.showDataAVTentec();
       this.showDataAVYpy();
@@ -53,8 +56,114 @@ class Cost extends Component {
       .catch(err => console.warn(err));
   }
 
+  showDataDiscadorAmbiente1 = () => {
+    apiDiscadorAmbiente1.get('/', (req, res) => {
+      console.log('AMBIENTE 1', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorAmbiente1: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente1: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataDiscadorAmbiente2 = () => {
+    apiDiscadorAmbiente2.get('/', (req, res) => {
+      console.log('AMBIENTE 2', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorAmbiente2: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente2: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataDiscadorAmbiente3 = () => {
+    apiDiscadorAmbiente3.get('/', (req, res) => {
+      console.log('AMBIENTE 3', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorAmbiente3: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente3: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataDiscadorAmbiente4 = () => {
+    apiDiscadorAmbiente4.get('/', (req, res) => {
+      console.log('AMBIENTE 4', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorAmbiente4: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente4: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataURAs = () => {
+    apiUras.get('/', (req, res) => {
+      console.log('URAS', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorUras: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorUras: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataOlos = () => {
+    apiDiscadorOlos.get('/', (req, res) => {
+      console.log('OLOS', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorOlos: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorOlos: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataDiscadorBaldussi = () => {
+    apiDiscadorBaldussi.get('/', (req, res) => {
+      console.log('BALDUSSI', req.data)
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({        
+        discadorBaldussi: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorBaldussi: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
   showDataPABXBaldussi = () => {
     apiPABXBaldussi.get('/', (req, res) => {
+      console.log('PABX-BALDUSSI', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({
@@ -72,6 +181,7 @@ class Cost extends Component {
 
   showDataAVTentec = () => {
     apiAVTentec.get('/', (req, res) => {
+      console.log('AV-TENTEC', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({
@@ -89,6 +199,7 @@ class Cost extends Component {
 
   showDataAVYpy = () => {
     apiAVYpy.get('/', (req, res) => {
+      console.log('AV-YPY', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({
@@ -105,160 +216,29 @@ class Cost extends Component {
   }
 
   state = {
+    custos: {},
+
+    loading: {
+      pabxBaldussi: true,
+      avTentec: true,
+      avYpy: true
+    },
+
     dt: [
-      {
-        hora: '7h às 8h',
-        ambiente_1: 'R$ 100,00',
-        ambiente_2: 'R$ 100,00',
-        ambiente_3: 'R$ 100,00',
-        ambiente_4: 'R$ 100,00',
-        total_ambiente: 'R$ 100,00',
-        olos: 'R$ 100,00',
-        baldussi_d1: 'R$ 100,00'
-      },
-
-      {
-        hora: '8h às 9h',
-        ambiente_1: 'R$ 200,00',
-        ambiente_2: 'R$ 200,00',
-        ambiente_3: 'R$ 200,00',
-        ambiente_4: 'R$ 200,00',
-        total_ambiente: 'R$ 200,00',
-        olos: 'R$ 200,00',
-        baldussi_d1: 'R$ 200,00'
-      },
-
-      {
-        hora: '9h às 10h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '10h às 11h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '11h às 12h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '12h às 13h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '13h às 14h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '14h às 15h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '15h às 16h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '16h às 17h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '17h às 18h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '18h às 19h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '19h às 20h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      },
-
-      {
-        hora: '20h às 21h',
-        ambiente_1: 'R$ 300,00',
-        ambiente_2: 'R$ 300,00',
-        ambiente_3: 'R$ 300,00',
-        ambiente_4: 'R$ 300,00',
-        total_ambiente: 'R$ 300,00',
-        olos: 'R$ 300,00',
-        baldussi_d1: 'R$ 300,00'
-      }
+      { hora: '07h às 08h' },
+      { hora: '08h às 09h' },
+      { hora: '09h às 10h' },
+      { hora: '10h às 11h' },
+      { hora: '10h às 12h' },
+      { hora: '12h às 13h' },
+      { hora: '13h às 14h' },
+      { hora: '14h às 15h' },
+      { hora: '15h às 16h' },
+      { hora: '16h às 17h' },
+      { hora: '17h às 18h' },
+      { hora: '18h às 19h' },
+      { hora: '19h às 20h' },
+      { hora: '20h às 21h' }
     ]
     
   }  
@@ -268,58 +248,56 @@ class Cost extends Component {
       title: 'Hora',
       dataIndex: 'hora',
       key: 'hora',
-      align: 'center',
-      render: (text) => (text)
+      align: 'center'
     },
 
     {
       title: 'Ambiente 1',
       dataIndex: 'ambiente_1',
       key: 'ambiente_1',
-      align: 'center'
+      align: 'center',
+      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
-
+    
     {
       title: 'Ambiente 2',
       dataIndex: 'ambiente_2',
-      key: 'ambiente_2',
-      align: 'center'
+      key: 'ambciente_2',
+      align: 'center',
+      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Ambiente 3',
       dataIndex: 'ambiente_3',
       key: 'ambiente_3',
-      align: 'center'
+      align: 'center',
+      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Ambiente 4',
       dataIndex: 'ambiente_4',
       key: 'ambiente_4',
-      align: 'center'
-    },
-
-    {
-      title: 'Total Ambiente',
-      dataIndex: 'total_ambiente',
-      key: 'total_ambiente',
-      align: 'center'
+      align: 'center',
+      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Olos',
       dataIndex: 'olos',
       key: 'olos',
-      align: 'center'
+      align: 'center',
+      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
-      title: 'Baldussi (Discador 1)',
+      title: 'Baldussi - Discador 1',
       dataIndex: 'baldussi_d1',
       key: 'baldussi_d1',
-      align: 'center'
-    },
+      align: 'center',
+      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+    }
 
   ];
 
@@ -331,35 +309,38 @@ class Cost extends Component {
             <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
               <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') }</Title>
             </Row>
+
             <Table 
+              gutter={1}
               rowKey='hora' 
               size='small' 
               style={gridTable}
               dataSource={this.state.dt} 
               columns={this.columns} 
               pagination={false}
-            />            
+            />
+
             <Row style={{...gridTable, paddingTop: 20}}>
               <Col span={8}>
-                <Spin spinning={this.state.loading && this.state.loading.pabxBaldussi} >
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={this.state.loading && this.state.loading.pabxBaldussi}>
                   <Card title='PABX - Baldussi'>
-                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && this.state.custos.pabxBaldussi}</Card.Grid>
+                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && 'R$ ' + (this.state.custos.pabxBaldussi || '0,00')}</Card.Grid>
                   </Card>
                 </Spin>
               </Col>
 
               <Col span={8}>
-                <Spin spinning={this.state.loading && this.state.loading.avTentec} >
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={this.state.loading && this.state.loading.avTentec}>
                   <Card title='Ag. Virtual - TenTec'>
-                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && this.state.custos.avTentec}</Card.Grid>
+                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && 'R$ ' + (this.state.custos.avTentec || '0,00')}</Card.Grid>
                   </Card>
                 </Spin>
               </Col>
 
               <Col span={8}>
-                <Spin spinning={this.state.loading && this.state.loading.avYpy} >
+                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={this.state.loading && this.state.loading.avYpy}>
                   <Card title='Ag. Virtual - Ypy'>
-                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && this.state.custos.avYpy}</Card.Grid>
+                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && 'R$ ' + (this.state.custos.avYpy || '0,00')}</Card.Grid>
                   </Card>
                 </Spin>
               </Col>
