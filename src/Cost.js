@@ -38,8 +38,8 @@ class Cost extends Component {
       this.showDataDiscadorAmbiente2();
       this.showDataDiscadorAmbiente3();
       this.showDataDiscadorAmbiente4();
-      this.showDataURAs();
-      this.showDataOlos();
+      // this.showDataURAs();
+       this.showDataOlos();
       this.showDataDiscadorBaldussi();
       this.showDataPABXBaldussi();
       this.showDataAVTentec();
@@ -56,9 +56,8 @@ class Cost extends Component {
       .catch(err => console.warn(err));
   }
 
-  showDataDiscadorAmbiente1 = () => {
-    apiDiscadorAmbiente1.get('/', (req, res) => {
-      console.log('AMBIENTE 1', req.data)
+  showDataDiscadorAmbiente1 = async () => {
+    await apiDiscadorAmbiente1.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -69,11 +68,20 @@ class Cost extends Component {
         }
       })))
       .catch(err => console.warn(err));
+
+      let retAmb1 = this.state.discadorAmbiente1 && this.state.discadorAmbiente1.map( (a1, i) => {
+        return {
+          ...this.state.dt[i],
+          a1
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb1  }))
+      
   }
 
-  showDataDiscadorAmbiente2 = () => {
-    apiDiscadorAmbiente2.get('/', (req, res) => {
-      console.log('AMBIENTE 2', req.data)
+  showDataDiscadorAmbiente2 = async () => {
+    await apiDiscadorAmbiente2.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -84,11 +92,19 @@ class Cost extends Component {
         }
       })))
       .catch(err => console.warn(err));
+
+      let retAmb2 = this.state.discadorAmbiente2 && this.state.discadorAmbiente2.map( (a2, i) => {
+        return {
+          ...this.state.dt[i],
+          a2
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb2  }))
   }
 
-  showDataDiscadorAmbiente3 = () => {
-    apiDiscadorAmbiente3.get('/', (req, res) => {
-      console.log('AMBIENTE 3', req.data)
+  showDataDiscadorAmbiente3 = async () => {
+    await apiDiscadorAmbiente3.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -99,11 +115,19 @@ class Cost extends Component {
         }
       })))
       .catch(err => console.warn(err));
+
+      let retAmb3 = this.state.discadorAmbiente3 && this.state.discadorAmbiente3.map( (a3, i) => {
+        return {
+          ...this.state.dt[i],
+          a3
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb3  }))
   }
 
-  showDataDiscadorAmbiente4 = () => {
-    apiDiscadorAmbiente4.get('/', (req, res) => {
-      console.log('AMBIENTE 4', req.data)
+  showDataDiscadorAmbiente4 = async () => {
+    await apiDiscadorAmbiente4.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -114,11 +138,19 @@ class Cost extends Component {
         }
       })))
       .catch(err => console.warn(err));
+
+      let retAmb4 = this.state.discadorAmbiente4 && this.state.discadorAmbiente4.map( (a4, i) => {
+        return {
+          ...this.state.dt[i],
+          a4
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb4  }))
   }
 
   showDataURAs = () => {
     apiUras.get('/', (req, res) => {
-      console.log('URAS', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -131,9 +163,8 @@ class Cost extends Component {
       .catch(err => console.warn(err));
   }
 
-  showDataOlos = () => {
-    apiDiscadorOlos.get('/', (req, res) => {
-      console.log('OLOS', req.data)
+  showDataOlos = async () => {
+    await apiDiscadorOlos.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -144,11 +175,19 @@ class Cost extends Component {
         }
       })))
       .catch(err => console.warn(err));
+
+    let retOlos = this.state.discadorOlos && this.state.discadorOlos.map( (o, i) => {
+      return {
+        ...this.state.dt[i],
+        o
+      }
+    });
+
+    this.setState( (prev, props) => ({ dt:  retOlos  }));
   }
 
-  showDataDiscadorBaldussi = () => {
-    apiDiscadorBaldussi.get('/', (req, res) => {
-      console.log('BALDUSSI', req.data)
+  showDataDiscadorBaldussi = async () => {
+    await apiDiscadorBaldussi.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
@@ -159,11 +198,19 @@ class Cost extends Component {
         }
       })))
       .catch(err => console.warn(err));
+
+    let retBaldussi = this.state.discadorBaldussi && this.state.discadorBaldussi.map( (b, i) => {
+      return {
+        ...this.state.dt[i],
+        b
+      }
+    })
+
+    this.setState( (prev, props) => ({ dt:  retBaldussi  }))
   }
 
   showDataPABXBaldussi = () => {
     apiPABXBaldussi.get('/', (req, res) => {
-      console.log('PABX-BALDUSSI', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({
@@ -181,7 +228,6 @@ class Cost extends Component {
 
   showDataAVTentec = () => {
     apiAVTentec.get('/', (req, res) => {
-      console.log('AV-TENTEC', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({
@@ -199,7 +245,6 @@ class Cost extends Component {
 
   showDataAVYpy = () => {
     apiAVYpy.get('/', (req, res) => {
-      console.log('AV-YPY', req.data)
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({
@@ -253,50 +298,58 @@ class Cost extends Component {
 
     {
       title: 'Ambiente 1',
-      dataIndex: 'ambiente_1',
-      key: 'ambiente_1',
+      dataIndex: 'a1',
+      key: 'a1',
       align: 'center',
-      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
     
     {
       title: 'Ambiente 2',
-      dataIndex: 'ambiente_2',
-      key: 'ambciente_2',
+      dataIndex: 'a2',
+      key: 'a2',
       align: 'center',
-      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Ambiente 3',
-      dataIndex: 'ambiente_3',
-      key: 'ambiente_3',
+      dataIndex: 'a3',
+      key: 'a3',
       align: 'center',
-      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Ambiente 4',
-      dataIndex: 'ambiente_4',
-      key: 'ambiente_4',
+      dataIndex: 'a4',
+      key: 'a4',
       align: 'center',
-      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+    },
+
+    {
+      title: 'URAs',
+      dataIndex: 'u',
+      key: 'u',
+      align: 'center',
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Olos',
-      dataIndex: 'olos',
-      key: 'olos',
+      dataIndex: 'o',
+      key: 'o',
       align: 'center',
-      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     },
 
     {
       title: 'Baldussi - Discador 1',
-      dataIndex: 'baldussi_d1',
-      key: 'baldussi_d1',
+      dataIndex: 'b',
+      key: 'b',
       align: 'center',
-      // render: (text) => text ? text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
     }
 
   ];
@@ -347,7 +400,7 @@ class Cost extends Component {
             </Row>
           </div>
         } />
-        {console.log('state', this.state)}
+        {/* {console.log('state', this.state)} */}
       </Row>
     );
   }
