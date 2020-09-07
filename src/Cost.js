@@ -31,19 +31,19 @@ const gridStyle = {
 
 class Cost extends Component {
 
-  componentDidMount(){
-
-      this.showDataIP();
-      this.showDataDiscadorAmbiente1();
-      this.showDataDiscadorAmbiente2();
-      this.showDataDiscadorAmbiente3();
-      this.showDataDiscadorAmbiente4();
-      // this.showDataURAs();
-       this.showDataOlos();
-      this.showDataDiscadorBaldussi();
-      this.showDataPABXBaldussi();
-      this.showDataAVTentec();
-      this.showDataAVYpy();
+  componentDidMount = async () => {
+    
+    this.showDataIP();
+    this.showDataDiscadorAmbiente1();
+    this.showDataDiscadorAmbiente2();
+    this.showDataDiscadorAmbiente3();
+    this.showDataDiscadorAmbiente4();
+    this.showDataURAs();
+    this.showDataOlos();
+    this.showDataDiscadorBaldussi();
+    this.showDataPABXBaldussi();
+    this.showDataAVTentec();
+    this.showDataAVYpy();
   }
 
   showDataIP = () => {
@@ -149,18 +149,27 @@ class Cost extends Component {
       this.setState( (prev, props) => ({ dt:  retAmb4  }))
   }
 
-  showDataURAs = () => {
-    apiUras.get('/', (req, res) => {
+  showDataURAs = async () => {
+    await apiUras.get('/', (req, res) => {
       res.send(req.data)
     })
       .then(res => this.setState((prev, props) => ({        
-        discadorUras: res.data.custo,
+        uras: res.data.custo,
         loading: {
           ...prev.loading,
-          discadorUras: false
+          uras: false
         }
       })))
       .catch(err => console.warn(err));
+
+    let retUras = this.state.uras && this.state.uras.map( (u, i) => {
+      return {
+        ...this.state.dt[i],
+        u
+      }
+    });
+
+    this.setState( (prev, props) => ({ dt:  retUras  }));
   }
 
   showDataOlos = async () => {
