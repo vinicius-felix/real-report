@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, Card, Typography, Spin } from 'antd';
+import { Table, Row, Col, Card, Typography, Spin, Button } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
@@ -31,244 +31,6 @@ const gridStyle = {
 
 class Cost extends Component {
 
-  componentDidMount = async () => {
-    
-    this.showDataIP();
-    this.showDataDiscadorAmbiente1();
-    this.showDataDiscadorAmbiente2();
-    this.showDataDiscadorAmbiente3();
-    this.showDataDiscadorAmbiente4();
-    this.showDataURAs();
-    this.showDataOlos();
-    this.showDataDiscadorBaldussi();
-    this.showDataPABXBaldussi();
-    this.showDataAVTentec();
-    this.showDataAVYpy();
-  }
-
-  showDataIP = () => {
-    apiIP.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => (this.setState((prev, props) => ({
-        ip: res.data
-      }))))
-      .catch(err => console.warn(err));
-  }
-
-  showDataDiscadorAmbiente1 = async () => {
-    await apiDiscadorAmbiente1.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        discadorAmbiente1: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente1: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb1 = this.state.discadorAmbiente1 && this.state.discadorAmbiente1.map( (a1, i) => {
-        return {
-          ...this.state.dt[i],
-          a1
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb1  }))
-      
-  }
-
-  showDataDiscadorAmbiente2 = async () => {
-    await apiDiscadorAmbiente2.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        discadorAmbiente2: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente2: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb2 = this.state.discadorAmbiente2 && this.state.discadorAmbiente2.map( (a2, i) => {
-        return {
-          ...this.state.dt[i],
-          a2
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb2  }))
-  }
-
-  showDataDiscadorAmbiente3 = async () => {
-    await apiDiscadorAmbiente3.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        discadorAmbiente3: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente3: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb3 = this.state.discadorAmbiente3 && this.state.discadorAmbiente3.map( (a3, i) => {
-        return {
-          ...this.state.dt[i],
-          a3
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb3  }))
-  }
-
-  showDataDiscadorAmbiente4 = async () => {
-    await apiDiscadorAmbiente4.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        discadorAmbiente4: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente4: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb4 = this.state.discadorAmbiente4 && this.state.discadorAmbiente4.map( (a4, i) => {
-        return {
-          ...this.state.dt[i],
-          a4
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb4  }))
-  }
-
-  showDataURAs = async () => {
-    await apiUras.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        uras: res.data.custo,
-        loading: {
-          ...prev.loading,
-          uras: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-    let retUras = this.state.uras && this.state.uras.map( (u, i) => {
-      return {
-        ...this.state.dt[i],
-        u
-      }
-    });
-
-    this.setState( (prev, props) => ({ dt:  retUras  }));
-  }
-
-  showDataOlos = async () => {
-    await apiDiscadorOlos.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        discadorOlos: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorOlos: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-    let retOlos = this.state.discadorOlos && this.state.discadorOlos.map( (o, i) => {
-      return {
-        ...this.state.dt[i],
-        o
-      }
-    });
-
-    this.setState( (prev, props) => ({ dt:  retOlos  }));
-  }
-
-  showDataDiscadorBaldussi = async () => {
-    await apiDiscadorBaldussi.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({        
-        discadorBaldussi: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorBaldussi: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-    let retBaldussi = this.state.discadorBaldussi && this.state.discadorBaldussi.map( (b, i) => {
-      return {
-        ...this.state.dt[i],
-        b
-      }
-    })
-
-    this.setState( (prev, props) => ({ dt:  retBaldussi  }))
-  }
-
-  showDataPABXBaldussi = () => {
-    apiPABXBaldussi.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        custos: {
-          ...prev.custos,
-          pabxBaldussi: res.data.custo
-        },
-        loading: {
-          ...prev.loading,
-          pabxBaldussi: false
-        }
-      })))
-      .catch(err => console.warn(err));
-  }
-
-  showDataAVTentec = () => {
-    apiAVTentec.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        custos: {
-          ...prev.custos,
-          avTentec: res.data.custo
-        },
-        loading: {
-          ...prev.loading,
-          avTentec: false
-        }
-      })))
-      .catch(err => console.warn(err));
-  }
-
-  showDataAVYpy = () => {
-    apiAVYpy.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        custos: {
-          ...prev.custos,
-          avYpy: res.data.custo
-        },
-        loading: {
-          ...prev.loading,
-          avYpy: false
-        }
-      })))
-      .catch(err => console.warn(err));
-  }
-
   state = {
     custos: {},
 
@@ -294,8 +56,256 @@ class Cost extends Component {
       { hora: '19h às 20h' },
       { hora: '20h às 21h' }
     ]
+  }
+
+  componentDidMount = async () => {
     
-  }  
+    this.showDataIP();
+    this.showDataDiscadorAmbiente1();
+    this.showDataDiscadorAmbiente2();
+    this.showDataDiscadorAmbiente3();
+    this.showDataDiscadorAmbiente4();
+    this.showDataOlos();
+    this.showDataDiscadorBaldussi();
+    this.showDataPABXBaldussi();
+    this.showDataAVTentec();
+    this.showDataAVYpy();
+  }
+
+  showDataIP = () => {
+    apiIP.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => (this.setState((prev, props) => ({
+        ip: res.data
+      }))))
+      .catch(err => console.warn(err));
+  }
+
+  showDataDiscadorAmbiente1 = async () => {
+    await apiDiscadorAmbiente1.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        discadorAmbiente1: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente1: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+      let retAmb1 = this.state.discadorAmbiente1 && this.state.discadorAmbiente1.map( (a1, i) => {
+        return {
+          ...this.state.dt[i],
+          a1
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb1  }))
+      
+  }
+
+  showDataDiscadorAmbiente2 = async () => {
+    await apiDiscadorAmbiente2.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,    
+        discadorAmbiente2: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente2: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+      let retAmb2 = this.state.discadorAmbiente2 && this.state.discadorAmbiente2.map( (a2, i) => {
+        return {
+          ...this.state.dt[i],
+          a2
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb2  }))
+  }
+
+  showDataDiscadorAmbiente3 = async () => {
+    await apiDiscadorAmbiente3.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        discadorAmbiente3: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente3: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+      let retAmb3 = this.state.discadorAmbiente3 && this.state.discadorAmbiente3.map( (a3, i) => {
+        return {
+          ...this.state.dt[i],
+          a3
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb3  }))
+  }
+
+  showDataDiscadorAmbiente4 = async () => {
+    await apiDiscadorAmbiente4.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        discadorAmbiente4: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorAmbiente4: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+      let retAmb4 = this.state.discadorAmbiente4 && this.state.discadorAmbiente4.map( (a4, i) => {
+        return {
+          ...this.state.dt[i],
+          a4
+        }
+      })
+
+      this.setState( (prev, props) => ({ dt:  retAmb4  }))
+  }
+
+  showDataURAs = async () => {
+    await apiUras.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        uras: res.data.custo,
+        loading: {
+          ...prev.loading,
+          uras: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+    let retUras = this.state.uras && this.state.uras.map( (u, i) => {
+      return {
+        ...this.state.dt[i],
+        u
+      }
+    });
+
+    this.setState( (prev, props) => ({ dt:  retUras  }));
+  }
+
+  showDataOlos = async () => {
+    await apiDiscadorOlos.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        discadorOlos: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorOlos: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+    let retOlos = this.state.discadorOlos && this.state.discadorOlos.map( (o, i) => {
+      return {
+        ...this.state.dt[i],
+        o
+      }
+    });
+
+    this.setState( (prev, props) => ({ dt:  retOlos  }));
+  }
+
+  showDataDiscadorBaldussi = async () => {
+    await apiDiscadorBaldussi.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        discadorBaldussi: res.data.custo,
+        loading: {
+          ...prev.loading,
+          discadorBaldussi: false
+        }
+      })))
+      .catch(err => console.warn(err));
+
+    let retBaldussi = this.state.discadorBaldussi && this.state.discadorBaldussi.map( (b, i) => {
+      return {
+        ...this.state.dt[i],
+        b
+      }
+    })
+
+    this.setState( (prev, props) => ({ dt:  retBaldussi  }))
+  }
+
+  showDataPABXBaldussi = () => {
+    apiPABXBaldussi.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        custos: {
+          ...prev.custos,
+          pabxBaldussi: res.data.custo
+        },
+        loading: {
+          ...prev.loading,
+          pabxBaldussi: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataAVTentec = () => {
+    apiAVTentec.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        custos: {
+          ...prev.custos,
+          avTentec: res.data.custo
+        },
+        loading: {
+          ...prev.loading,
+          avTentec: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  showDataAVYpy = () => {
+    apiAVYpy.get('/', (req, res) => {
+      res.send(req.data)
+    })
+      .then(res => this.setState((prev, props) => ({
+        ...prev,
+        custos: {
+          ...prev.custos,
+          avYpy: res.data.custo
+        },
+        loading: {
+          ...prev.loading,
+          avYpy: false
+        }
+      })))
+      .catch(err => console.warn(err));
+  }
+
+  
 
   columns = [
     {
@@ -370,6 +380,17 @@ class Cost extends Component {
           <div>          
             <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
               <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') }</Title>
+            </Row>
+
+            <Row style={{ marginLeft: '10%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
+              <Button style={{marginLeft: 25}} onClick={ () => console.log(this.state) }> Atualizar </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente1() }> Atualizar Ambiente 1 </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente2() }> Atualizar Ambiente 2 </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente3() }> Atualizar Ambiente 3 </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente4() }> Atualizar Ambiente 4 </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataURAs() }> Atualizar URAs </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataOlos() }> Atualizar Olos </Button>
+              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorBaldussi() }> Atualizar Baldussi </Button>
             </Row>
 
             <Table 

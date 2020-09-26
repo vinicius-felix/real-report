@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'antd/dist/antd.css';
 import { Layout, Row, Col } from 'antd';
-import { LineChartOutlined, HomeOutlined, NodeIndexOutlined, PhoneOutlined, DollarOutlined } from '@ant-design/icons';
+import { LineChartOutlined, HomeOutlined, NodeIndexOutlined, PhoneOutlined, DollarOutlined, FileDoneOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 
 const { Header, Footer, Content, Sider } = Layout;
@@ -82,6 +82,13 @@ const MainLayoutSite = (props) => (
           <Col span={2} />
           <Col span={4}><LineChartOutlined style={{color: 'red', fontSize: 25}} /></Col>
           <Col span={10}><Link style={{color: 'white'}} to="/charts">Gráficos</Link></Col>            
+          <Col span={5} />
+        </Row>
+
+        <Row key="tickets" style={paddingAll}>
+          <Col span={2} />
+          <Col span={4}><FileDoneOutlined style={{color: 'red', fontSize: 25}} /></Col>
+          <Col span={10}><Link style={{color: 'white'}} to="/tickets">Tickets</Link></Col>            
           <Col span={5} />
         </Row>
         
