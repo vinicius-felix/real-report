@@ -60,16 +60,16 @@ class Cost extends Component {
 
   componentDidMount = async () => {
     
-    // this.showDataIP();
-    // this.showDataDiscadorAmbiente1();
-    // this.showDataDiscadorAmbiente2();
-    // this.showDataDiscadorAmbiente3();
-    // this.showDataDiscadorAmbiente4();
-    // this.showDataOlos();
-    // this.showDataDiscadorBaldussi();
-    // this.showDataPABXBaldussi();
-    // this.showDataAVTentec();
-    // this.showDataAVYpy();
+    this.showDataIP();
+    this.showDataDiscadorAmbiente1();
+    this.showDataDiscadorAmbiente2();
+    this.showDataDiscadorAmbiente3();
+    this.showDataDiscadorAmbiente4();
+    this.showDataOlos();
+    this.showDataDiscadorBaldussi();
+    this.showDataPABXBaldussi();
+    this.showDataAVTentec();
+    this.showDataAVYpy();
   }
 
   showDataIP = () => {
