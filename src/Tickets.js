@@ -66,7 +66,7 @@ class Tickets extends Component {
     await apiTickets.get('/', (req, res) => {
       res.send(req.data)
     })
-      .then(res => (this.setState((prev, props) => (console.log(res), {
+      .then(res => (this.setState((prev, props) => ({
         tickets: res.data.finalRes
       }))))
       .catch(err => console.warn(err));

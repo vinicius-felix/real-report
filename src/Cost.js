@@ -60,16 +60,16 @@ class Cost extends Component {
 
   componentDidMount = async () => {
     
-    this.showDataIP();
-    this.showDataDiscadorAmbiente1();
-    this.showDataDiscadorAmbiente2();
-    this.showDataDiscadorAmbiente3();
-    this.showDataDiscadorAmbiente4();
-    this.showDataOlos();
-    this.showDataDiscadorBaldussi();
-    this.showDataPABXBaldussi();
-    this.showDataAVTentec();
-    this.showDataAVYpy();
+    // this.showDataIP();
+    // this.showDataDiscadorAmbiente1();
+    // this.showDataDiscadorAmbiente2();
+    // this.showDataDiscadorAmbiente3();
+    // this.showDataDiscadorAmbiente4();
+    // this.showDataOlos();
+    // this.showDataDiscadorBaldussi();
+    // this.showDataPABXBaldussi();
+    // this.showDataAVTentec();
+    // this.showDataAVYpy();
   }
 
   showDataIP = () => {
@@ -382,8 +382,7 @@ class Cost extends Component {
               <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') }</Title>
             </Row>
 
-            <Row style={{ marginLeft: '10%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
-              <Button style={{marginLeft: 25}} onClick={ () => console.log(this.state) }> Atualizar </Button>
+            <Row style={{ marginLeft: '17%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
               <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente1() }> Atualizar Ambiente 1 </Button>
               <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente2() }> Atualizar Ambiente 2 </Button>
               <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente3() }> Atualizar Ambiente 3 </Button>
