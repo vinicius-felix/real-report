@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import { Table, Row, Col, Card, Typography, Spin, Button } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+import { Table, Row, Typography, Button, message, Col, Spin, Card } from 'antd';
+import { ReloadOutlined, LoadingOutlined } from '@ant-design/icons';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
 import moment from 'moment';
-import apiIP from './Services/service-ip';
-import apiDiscadorAmbiente1 from './Services/service-discador-ambiente1';
-import apiDiscadorAmbiente2 from './Services/service-discador-ambiente2';
-import apiDiscadorAmbiente3 from './Services/service-discador-ambiente3';
-import apiDiscadorAmbiente4 from './Services/service-discador-ambiente4';
-import apiUras from './Services/service-uras';
-import apiDiscadorOlos from './Services/service-discador-olos';
-import apiDiscadorBaldussi from './Services/service-discador-baldussi';
-import apiPABXBaldussi from './Services/service-pabx-baldussi';
+import apiDiscadorAmbiente from './Services/service-discador-ambiente';
+import apiUras from './Services/service-uras-2';
+import apiOlos from './Services/service-discador-olos';
 import apiAVTentec from './Services/service-av-tentec';
 import apiAVYpy from './Services/service-av-ypy';
+//import apiDiscadorBaldussi from './Services/service-discador-baldussi-2';
 
 const { Title } = Typography;
 
@@ -31,242 +26,20 @@ const gridStyle = {
 
 class Cost extends Component {
 
-  state = {
-    custos: {},
-
-    loading: {
-      pabxBaldussi: true,
-      avTentec: true,
-      avYpy: true
-    },
-
-    dt: [
-      { hora: '07h às 08h' },
-      { hora: '08h às 09h' },
-      { hora: '09h às 10h' },
-      { hora: '10h às 11h' },
-      { hora: '10h às 12h' },
-      { hora: '12h às 13h' },
-      { hora: '13h às 14h' },
-      { hora: '14h às 15h' },
-      { hora: '15h às 16h' },
-      { hora: '16h às 17h' },
-      { hora: '17h às 18h' },
-      { hora: '18h às 19h' },
-      { hora: '19h às 20h' },
-      { hora: '20h às 21h' }
-    ]
+  constructor(props){
+    super(props);
+    this.state = {
+      data: [],
+      reload: false,
+      loadingTable: true,
+      loadData: false
+    }
   }
 
   componentDidMount = async () => {
-    
-    this.showDataIP();
-    this.showDataDiscadorAmbiente1();
-    this.showDataDiscadorAmbiente2();
-    this.showDataDiscadorAmbiente3();
-    this.showDataDiscadorAmbiente4();
-    this.showDataOlos();
-    this.showDataDiscadorBaldussi();
-    this.showDataPABXBaldussi();
+    this.constructTable();
     this.showDataAVTentec();
     this.showDataAVYpy();
-  }
-
-  showDataIP = () => {
-    apiIP.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => (this.setState((prev, props) => ({
-        ip: res.data
-      }))))
-      .catch(err => console.warn(err));
-  }
-
-  showDataDiscadorAmbiente1 = async () => {
-    await apiDiscadorAmbiente1.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        discadorAmbiente1: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente1: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb1 = this.state.discadorAmbiente1 && this.state.discadorAmbiente1.map( (a1, i) => {
-        return {
-          ...this.state.dt[i],
-          a1
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb1  }))
-      
-  }
-
-  showDataDiscadorAmbiente2 = async () => {
-    await apiDiscadorAmbiente2.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,    
-        discadorAmbiente2: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente2: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb2 = this.state.discadorAmbiente2 && this.state.discadorAmbiente2.map( (a2, i) => {
-        return {
-          ...this.state.dt[i],
-          a2
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb2  }))
-  }
-
-  showDataDiscadorAmbiente3 = async () => {
-    await apiDiscadorAmbiente3.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        discadorAmbiente3: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente3: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb3 = this.state.discadorAmbiente3 && this.state.discadorAmbiente3.map( (a3, i) => {
-        return {
-          ...this.state.dt[i],
-          a3
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb3  }))
-  }
-
-  showDataDiscadorAmbiente4 = async () => {
-    await apiDiscadorAmbiente4.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        discadorAmbiente4: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorAmbiente4: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-      let retAmb4 = this.state.discadorAmbiente4 && this.state.discadorAmbiente4.map( (a4, i) => {
-        return {
-          ...this.state.dt[i],
-          a4
-        }
-      })
-
-      this.setState( (prev, props) => ({ dt:  retAmb4  }))
-  }
-
-  showDataURAs = async () => {
-    await apiUras.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        uras: res.data.custo,
-        loading: {
-          ...prev.loading,
-          uras: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-    let retUras = this.state.uras && this.state.uras.map( (u, i) => {
-      return {
-        ...this.state.dt[i],
-        u
-      }
-    });
-
-    this.setState( (prev, props) => ({ dt:  retUras  }));
-  }
-
-  showDataOlos = async () => {
-    await apiDiscadorOlos.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        discadorOlos: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorOlos: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-    let retOlos = this.state.discadorOlos && this.state.discadorOlos.map( (o, i) => {
-      return {
-        ...this.state.dt[i],
-        o
-      }
-    });
-
-    this.setState( (prev, props) => ({ dt:  retOlos  }));
-  }
-
-  showDataDiscadorBaldussi = async () => {
-    await apiDiscadorBaldussi.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        discadorBaldussi: res.data.custo,
-        loading: {
-          ...prev.loading,
-          discadorBaldussi: false
-        }
-      })))
-      .catch(err => console.warn(err));
-
-    let retBaldussi = this.state.discadorBaldussi && this.state.discadorBaldussi.map( (b, i) => {
-      return {
-        ...this.state.dt[i],
-        b
-      }
-    })
-
-    this.setState( (prev, props) => ({ dt:  retBaldussi  }))
-  }
-
-  showDataPABXBaldussi = () => {
-    apiPABXBaldussi.get('/', (req, res) => {
-      res.send(req.data)
-    })
-      .then(res => this.setState((prev, props) => ({
-        ...prev,
-        custos: {
-          ...prev.custos,
-          pabxBaldussi: res.data.custo
-        },
-        loading: {
-          ...prev.loading,
-          pabxBaldussi: false
-        }
-      })))
-      .catch(err => console.warn(err));
   }
 
   showDataAVTentec = () => {
@@ -305,7 +78,118 @@ class Cost extends Component {
       .catch(err => console.warn(err));
   }
 
-  
+  constructTable = async () => {
+    
+    const amb1 = '192.168.220.10', amb2 = '192.168.200.83', amb3 = '192.168.200.247', amb4 = '192.168.200.87';
+    let currentHour = Number.parseInt(moment().format('HH'));
+    let startHour = 7, count = 0;
+    
+    for(startHour; startHour <= currentHour; startHour++){
+
+      // Ambiente 1
+      message.warning('Acessando ambiente 1...');
+      let ambiente1 = await apiDiscadorAmbiente.get(`/${amb1}/${startHour}/${(startHour)+1}`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' }); 
+
+
+      // Ambiente 2
+      message.warning('Acessando ambiente 2...');
+      let ambiente2 = await apiDiscadorAmbiente.get(`/${amb2}/${startHour}/${(startHour)+1}`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' }); 
+
+
+      // Ambiente 3
+      message.warning('Acessando ambiente 3...');
+      let ambiente3 = await apiDiscadorAmbiente.get(`/${amb3}/${startHour}/${(startHour)+1}`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' });
+
+
+      // Ambiente 4
+      message.warning('Acessando ambiente 4...');
+      let ambiente4 = await apiDiscadorAmbiente.get(`/${amb4}/${startHour}/${(startHour)+1}`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' }); 
+
+
+      // URAs
+      message.warning('Acessando URAs...');
+      let ura = await apiUras.get(`/${startHour}`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' });
+
+      // Olos
+      message.warning('Acessando Olos...');
+      let olos = await apiOlos.get(`/`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' });
+
+
+      // Baldussi
+      // message.warning('Acessando Baldussi...');
+      // let baldussi = await apiDiscadorBaldussi.get(`/${startHour}/${(startHour)+1}`, (req, res) => {
+      //   res.send(req.data)
+      // })
+      //   .then(res => { return res.data.custo })
+      //   .catch(err => { return 'R$ 0,00' }); 
+
+      this.setState((prev, props) => ({ 
+        loadingTable: false,
+        data: [
+          ...prev.data, 
+          {
+            ambiente1,
+            ambiente2,
+            ambiente3,
+            ambiente4,
+            totalAmbiente: (
+              Number.parseFloat(ambiente1.replace(',', '.')) +
+              Number.parseFloat(ambiente2.replace(',', '.')) +
+              Number.parseFloat(ambiente3.replace(',', '.')) +
+              Number.parseFloat(ambiente4.replace(',', '.'))
+            ).toFixed(2).replace('.', ','),
+            ura,
+            olos: olos[count],
+            //baldussi, 
+            hora: `${startHour}h até ${startHour+1}h`, 
+            horaInicial: startHour, 
+            horaFinal: startHour+1
+        }]}));
+
+        count++;
+    }
+
+    this.setState({ reload: true, loadData: true })
+    message.success('Dados carregados com sucesso!');
+
+  }
+
+  updateRow = async (rec) => {
+    if(this.state.reload){
+      message.warning('Carregando dados. Aguarde!');
+      this.setState({ 
+        data: [], 
+        reload: false, 
+        loadingTable: true,
+        loadData: false 
+      });
+      this.constructTable();
+    }
+  }
 
   columns = [
     {
@@ -313,63 +197,90 @@ class Cost extends Component {
       dataIndex: 'hora',
       key: 'hora',
       align: 'center'
-    },
+    },    
 
     {
       title: 'Ambiente 1',
-      dataIndex: 'a1',
-      key: 'a1',
+      dataIndex: 'ambiente1',
+      key: 'ambiente1',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: text => text && 'R$ ' + text
     },
-    
+
     {
       title: 'Ambiente 2',
-      dataIndex: 'a2',
-      key: 'a2',
+      dataIndex: 'ambiente2',
+      key: 'ambiente2',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: text => text && 'R$ ' + text
     },
 
     {
       title: 'Ambiente 3',
-      dataIndex: 'a3',
-      key: 'a3',
+      dataIndex: 'ambiente3',
+      key: 'ambiente3',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: text => text && 'R$ ' + text
     },
 
     {
       title: 'Ambiente 4',
-      dataIndex: 'a4',
-      key: 'a4',
+      dataIndex: 'ambiente4',
+      key: 'ambiente4',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: text => text && 'R$ ' + text
+    },
+
+    {
+      title: 'Total Ambientes',
+      dataIndex: 'totalAmbiente',
+      key: 'totalAmbiente',
+      align: 'center',
+      render: text => text && 'R$ ' + text
     },
 
     {
       title: 'URAs',
-      dataIndex: 'u',
-      key: 'u',
+      dataIndex: 'ura',
+      key: 'ura',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: text => text && 'R$ ' + text
     },
 
     {
       title: 'Olos',
-      dataIndex: 'o',
-      key: 'o',
+      dataIndex: 'olos',
+      key: 'olos',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
+      render: text => text && 'R$ ' + text
     },
 
+    // {
+    //   title: 'Baldussi',
+    //   dataIndex: 'baldussi',
+    //   key: 'baldussi',
+    //   align: 'center',
+    //   render: text => text && 'R$ ' + text
+    // },
+
     {
-      title: 'Baldussi - Discador 1',
-      dataIndex: 'b',
-      key: 'b',
+      key: 'actions',
+      title: 'Ações',
       align: 'center',
-      render: (text) => text ? 'R$ ' + text : <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} />
-    }
+      render: (textColumn, record) => (
+        <span>
+          <Button 
+            style={{width: 30, textAlign: 'center'}} 
+            type='primary' 
+            size='small' 
+            onClick={(rec) => { this.updateRow(rec) }}
+            ghost
+          >
+            <ReloadOutlined style={{color: 'gray'}} />
+          </Button>
+        </span>
+      )
+    }  
 
   ];
 
@@ -377,41 +288,34 @@ class Cost extends Component {
     return(
       <Row>
         <MainLayout content={
-          <div>          
+          <div>
             <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
-              <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') }</Title>
+              <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') } até as { moment().format('HH') }hrs </Title>
             </Row>
-
-            <Row style={{ marginLeft: '17%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente1() }> Atualizar Ambiente 1 </Button>
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente2() }> Atualizar Ambiente 2 </Button>
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente3() }> Atualizar Ambiente 3 </Button>
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorAmbiente4() }> Atualizar Ambiente 4 </Button>
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataURAs() }> Atualizar URAs </Button>
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataOlos() }> Atualizar Olos </Button>
-              <Button style={{marginLeft: 25}} onClick={ () => this.showDataDiscadorBaldussi() }> Atualizar Baldussi </Button>
+            <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }}>
+              <Title level={4}>{this.state.loadData ? '' : 'Gerando relatório...' }</Title>
             </Row>
-
+            
             <Table 
               gutter={1}
               rowKey='hora' 
               size='small' 
               style={gridTable}
-              dataSource={this.state.dt} 
+              dataSource={this.state.data} 
               columns={this.columns} 
               pagination={false}
+              loading={this.state.loadingTable}
+
+              onRow={ (rc, ri) => {
+                return {
+                  onClick: event => { message.error('Função em desenvolvimento.'); }
+                }
+              }}
+
             />
 
             <Row style={{...gridTable, paddingTop: 20}}>
-              <Col span={8}>
-                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={this.state.loading && this.state.loading.pabxBaldussi}>
-                  <Card title='PABX - Baldussi'>
-                    <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && 'R$ ' + (this.state.custos.pabxBaldussi || '0,00')}</Card.Grid>
-                  </Card>
-                </Spin>
-              </Col>
-
-              <Col span={8}>
+              <Col span={12}>
                 <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={this.state.loading && this.state.loading.avTentec}>
                   <Card title='Ag. Virtual - TenTec'>
                     <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && 'R$ ' + (this.state.custos.avTentec || '0,00')}</Card.Grid>
@@ -419,7 +323,7 @@ class Cost extends Component {
                 </Spin>
               </Col>
 
-              <Col span={8}>
+              <Col span={12}>
                 <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} spinning={this.state.loading && this.state.loading.avYpy}>
                   <Card title='Ag. Virtual - Ypy'>
                     <Card.Grid style={gridStyle} hoverable={false} >{this.state.custos && 'R$ ' + (this.state.custos.avYpy || '0,00')}</Card.Grid>
@@ -427,9 +331,10 @@ class Cost extends Component {
                 </Spin>
               </Col>
             </Row>
+                        
           </div>
         } />
-        {/* {console.log('state', this.state)} */}
+        {console.log('state', this.state)}
       </Row>
     );
   }

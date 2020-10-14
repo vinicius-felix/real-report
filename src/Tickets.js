@@ -9,7 +9,8 @@ const columns = [
     title: 'Id',
     dataIndex: 'ticket',
     key: 'ticket',
-    align: 'center'
+    align: 'center',
+    render: text => text && <a href={"https://portal.totalip.com.br/ticket/index?called_id=" + text}>{ text }</a>
   },
 
   {
@@ -19,9 +20,9 @@ const columns = [
   },
 
   {
-    title: 'Responsável',
-    dataIndex: 'responsável',
-    key: 'responsável'
+    title: 'Solicitante',
+    dataIndex: 'solicitante',
+    key: 'solicitante'
   },
 
   {
@@ -55,7 +56,8 @@ const gridTable = {
 class Tickets extends Component {
 
   state = {
-    tickets: []
+    tickets: [],
+    loadingTickets: true
   }
 
   componentDidMount = async () => {
@@ -67,7 +69,8 @@ class Tickets extends Component {
       res.send(req.data)
     })
       .then(res => (this.setState((prev, props) => ({
-        tickets: res.data.finalRes
+        tickets: res.data.finalRes,
+        loadingTickets: false
       }))))
       .catch(err => console.warn(err));
 
@@ -88,6 +91,7 @@ class Tickets extends Component {
                 dataSource={this.state.tickets}
                 columns={columns} 
                 pagination={false} 
+                loading={this.state.loadingTickets}
               />              
           </div>
         } />

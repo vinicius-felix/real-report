@@ -107,7 +107,7 @@ const MainLayoutSite = (props) => (
       </Content>
     </Layout>
 
-    <Footer style={{fontSize: 10, textAlign: 'center', backgroundColor: '#e3e3e3'}}>Versão 1.0.0</Footer>
+    <Footer style={{fontSize: 10, textAlign: 'center', backgroundColor: '#e3e3e3'}}></Footer>
     
   </Layout>    
 );
