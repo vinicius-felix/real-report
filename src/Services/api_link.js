@@ -1,3 +1,3 @@
 module.exports = {
-  API: 'http://localhost:3001'
+  API: 'http://192.168.9.162:3001'
  }

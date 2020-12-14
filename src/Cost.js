@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Table, Row, Typography, Button, message, Col, Spin, Card } from 'antd';
+import { Table, Row, Typography, Button, message, Col, Spin, Card, TimePicker, Divider } from 'antd';
 import { ReloadOutlined, LoadingOutlined } from '@ant-design/icons';
 import { MainLayout } from './MainLayout';
 import 'antd/dist/antd.css';
@@ -31,19 +31,18 @@ class Cost extends Component {
     this.state = {
       data: [],
       reload: false,
-      loadingTable: true,
+      loadingTable: false,
       loadData: false,
-      spinningLoad: true
+      spinningLoad: false
     }
   }
 
   componentDidMount = async () => {
-    this.constructTable();
     this.showDataAVTentec();
     this.showDataAVYpy();
   }
 
-  showDataAVTentec = () => {
+  showDataAVTentec = async () => {    
     apiAVTentec.get('/', (req, res) => {
       res.send(req.data)
     })
@@ -58,7 +57,7 @@ class Cost extends Component {
           avTentec: false
         }
       })))
-      .catch(err => console.warn(err));
+      .catch(err => {console.warn(err); return '0,00'});
   }
 
   showDataAVYpy = () => {
@@ -76,20 +75,35 @@ class Cost extends Component {
           avYpy: false
         }
       })))
-      .catch(err => console.warn(err));
+      .catch(err => {console.warn(err); return '0,00'});
   }
 
-  constructTable = async () => {
+  constructTable = async (startHour, currentHour) => {
+
+    this.setState((prev, props) => ({ loading: { ...prev.loading, avTentec: true, avYpy: true } }));
+
+    if(parseInt(startHour) < 10) 
+      startHour = parseInt(startHour.replace('0', ''));
+    else
+      startHour = parseInt(startHour);
+
+    if(parseInt(currentHour) < 10) 
+      currentHour = parseInt(currentHour.replace('0', ''));
+    else
+      currentHour = parseInt(currentHour);
+
+    await this.setState({ data: [], spinningLoad: true, loadingTable: true });
     
     const amb1 = '192.168.220.10', amb2 = '192.168.200.83', amb3 = '192.168.200.247', amb4 = '192.168.200.87';
-    let currentHour = Number.parseInt(moment().format('HH'));
-    let startHour = 7, count = 0;
+    // let currentHour = Number.parseInt(moment().format('HH'));
+    //let startHour = 7, 
+    let count = 0;
     
-    for(startHour; startHour <= currentHour; startHour++){
+    for(startHour; startHour < currentHour; startHour++){
 
       // Ambiente 1
       message.warning('Acessando ambiente 1...');
-      let ambiente1 = await apiDiscadorAmbiente.get(`/${amb1}/${startHour}/${(startHour)+1}`, (req, res) => {
+      let ambiente1 = await apiDiscadorAmbiente.get(`/${amb1}/${startHour}/${Number.parseInt(startHour)+1}`, (req, res) => {
         res.send(req.data)
       })
         .then(res => { return res.data.custo })
@@ -98,7 +112,7 @@ class Cost extends Component {
 
       // Ambiente 2
       message.warning('Acessando ambiente 2...');
-      let ambiente2 = await apiDiscadorAmbiente.get(`/${amb2}/${startHour}/${(startHour)+1}`, (req, res) => {
+      let ambiente2 = await apiDiscadorAmbiente.get(`/${amb2}/${startHour}/${Number.parseInt(startHour)+1}`, (req, res) => {
         res.send(req.data)
       })
         .then(res => { return res.data.custo })
@@ -107,7 +121,7 @@ class Cost extends Component {
 
       // Ambiente 3
       message.warning('Acessando ambiente 3...');
-      let ambiente3 = await apiDiscadorAmbiente.get(`/${amb3}/${startHour}/${(startHour)+1}`, (req, res) => {
+      let ambiente3 = await apiDiscadorAmbiente.get(`/${amb3}/${startHour}/${Number.parseInt(startHour)+1}`, (req, res) => {
         res.send(req.data)
       })
         .then(res => { return res.data.custo })
@@ -116,11 +130,20 @@ class Cost extends Component {
 
       // Ambiente 4
       message.warning('Acessando ambiente 4...');
-      let ambiente4 = await apiDiscadorAmbiente.get(`/${amb4}/${startHour}/${(startHour)+1}`, (req, res) => {
+      let ambiente4 = await apiDiscadorAmbiente.get(`/${amb4}/${startHour}/${Number.parseInt(startHour)+1}`, (req, res) => {
         res.send(req.data)
       })
         .then(res => { return res.data.custo })
         .catch(err => { return '0,00' }); 
+
+      
+      // Olos
+      message.warning('Acessando Olos...');
+      let olos = await apiOlos.get(`/`, (req, res) => {
+        res.send(req.data)
+      })
+        .then(res => { return res.data.custo })
+        .catch(err => { return '0,00' });
 
 
       // URAs
@@ -131,14 +154,8 @@ class Cost extends Component {
         .then(res => { return res.data.custo })
         .catch(err => { return '0,00' });
 
-      // Olos
-      message.warning('Acessando Olos...');
-      let olos = await apiOlos.get(`/`, (req, res) => {
-        res.send(req.data)
-      })
-        .then(res => { return res.data.custo })
-        .catch(err => { return '0,00' });
-
+      this.showDataAVTentec();
+      this.showDataAVYpy();
 
       // Baldussi
       // message.warning('Acessando Baldussi...');
@@ -164,34 +181,37 @@ class Cost extends Component {
               Number.parseFloat(ambiente4.replace(',', '.'))
             ).toFixed(2).replace('.', ','),
             ura,
-            olos: olos[count],
+            olos: olos[Number.parseInt(startHour)-7],
             //baldussi, 
-            hora: `${startHour}h até ${startHour+1}h`, 
+            hora: `${startHour}h até ${Number.parseInt(startHour)+1}h`, 
             horaInicial: startHour, 
-            horaFinal: startHour+1
+            horaFinal: Number.parseInt(startHour)+1
         }]}));
 
         count++;
     }
 
-    this.setState({ reload: true, loadData: true, spinningLoad: false });
+    this.setState({ reload: true, loadData: true, loadingTable: false, spinningLoad: false });
     message.success('Dados carregados com sucesso!');
 
   }
 
-  updateRow = async (rec) => {
-    if(this.state.reload){
-      message.warning('Carregando dados. Aguarde!');
-      this.setState({ 
-        data: [], 
-        reload: false, 
-        loadingTable: true,
-        loadData: false,
-        spinningLoad: true
-      });
-      this.constructTable();
-    }
-  }
+  // updateRow = async (rec) => {
+    // if(this.state.reload){
+    //   message.warning('Carregando dados. Aguarde!');
+    //   this.setState({ 
+    //     data: [], 
+    //     reload: false, 
+    //     loadingTable: true,
+    //     loadData: false 
+    //   });
+    // }
+  // }
+
+  // filterhour = (start, end) => {
+    //this.showDataAVTentec();
+    //this.showDataAVYpy();
+  // }
 
   columns = [
     {
@@ -291,12 +311,38 @@ class Cost extends Component {
       <Row>
         <MainLayout content={
           <div>
-            <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }} >
-              <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') } até as { moment().format('HH') }hrs </Title>
+            <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '3%', width: '100%' }} >
+              { /* <Title level={4}>Custos referentes ao dia de: { moment().format('DD/MM/YYYY') } até as { moment().format('HH') }hrs </Title> */}              
+              <Title level={4}> 
+                Inicio: <TimePicker 
+                  style={{ marginRight: 25 }}
+                  onChange={ (e) => this.setState({ horaInicial: moment(e && e._d).format('HH') }) }
+                  format={'HH'}
+                />
+
+                Fim: <TimePicker 
+                  style={{ marginRight: 15 }}
+                  onChange={ (e) => this.setState({ horaFinal: moment(e && e._d).format('HH') }) }
+                  format={'HH'}
+                  //defaultValue={moment()}
+                />
+
+                <Divider type='vertical' />
+
+                <Button 
+                  style={{ marginLeft: 15 }}
+                  onClick={ () => {
+                  this.state && (this.state.horaInicial && this.state.horaFinal) 
+                    ? this.constructTable(this.state.horaInicial, this.state.horaFinal)
+                    : message.warn('Informe todos os campos!')
+                } }> Filtrar </Button>
+              </Title>
             </Row>
-            <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }}>
+            {/*
+              <Row style={{ marginLeft: '4%', marginTop: '2%', marginBottom: '0%', width: '100%' }}>
               <Title level={4}>{this.state.loadData ? '' : 'Gerando relatório...' }</Title>
             </Row>
+            */}
             
             <Table 
               gutter={1}
@@ -308,11 +354,11 @@ class Cost extends Component {
               pagination={false}
               loading={this.state.loadingTable}
 
-              // onRow={ (rc, ri) => {
-              //   return {
-              //     onClick: event => { message.error('Função em desenvolvimento.'); }
-              //   }
-              // }}
+              onRow={ (rc, ri) => {
+                return {
+                  onClick: event => { message.error('Função em desenvolvimento.'); }
+                }
+              }}
 
             />
 
@@ -342,7 +388,7 @@ class Cost extends Component {
                         
           </div>
         } />
-        {console.log('state', this.state)}
+        { console.log('state', this.state) }
       </Row>
     );
   }

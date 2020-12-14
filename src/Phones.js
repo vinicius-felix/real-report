@@ -63,7 +63,7 @@ class Phones extends Component {
     message.success('Alterado com sucesso');
     await this.handleDelete(id);
     this.setState({ visibleEditModal: false });
-    this.showData();
+    await this.showData();
     // document.location.reload(true);
   };
 
@@ -71,24 +71,24 @@ class Phones extends Component {
     message.success('Registro removido com sucesso!');
     await this.handleDeleteCall(data);
     this.setState({ visibleEditModalCall: false });
-    this.showDataCall()
+    await this.showDataCall();
     // document.location.reload(true);
   }
 
-  onOkModalReceptivo = (e) => {
+  onOkModalReceptivo = async (e) => {
     const { form } = this.state
     e.preventDefault();
     apiReceptivos.put(`/atualiza/${form._id}`, form);
     this.setState({ visibleEditModal: false });
-    this.showData();
+    await this.showData();
   };
 
-  onOkModalCallback = (e) => {
+  onOkModalCallback = async (e) => {
     const { form } = this.state
     e.preventDefault();
     apiCallbacks.put(`/atualiza/${form._id}`, form);
     this.setState({ visibleEditModalCall: false });
-    this.showDataCall();    
+    await this.showDataCall();    
   };
 
   onCancelModal = () => {
@@ -145,21 +145,21 @@ class Phones extends Component {
     }));
   };
 
-  handleSubmit = e => {
+  handleSubmit = async e => {
     const { form } = this.state
     e.preventDefault();    
     apiReceptivos.post('/registrar', form);
     this.setState({ visibleAddModalRecep: false });
-    this.showData();
+    await this.showData();
     // document.location.reload(true);
   };
 
-  handleSubmitCall = e => {
+  handleSubmitCall = async e => {
     const { form } = this.state
     e.preventDefault();    
     apiCallbacks.post('/registrar', form);
     this.setState({ visibleAddModalCall: false });
-    this.showDataCall()
+    await this.showDataCall()
     // document.location.reload(true);
   };
 
