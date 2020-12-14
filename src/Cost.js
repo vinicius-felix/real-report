@@ -32,7 +32,8 @@ class Cost extends Component {
       data: [],
       reload: false,
       loadingTable: true,
-      loadData: false
+      loadData: false,
+      spinningLoad: true
     }
   }
 
@@ -173,7 +174,7 @@ class Cost extends Component {
         count++;
     }
 
-    this.setState({ reload: true, loadData: true })
+    this.setState({ reload: true, loadData: true, spinningLoad: false });
     message.success('Dados carregados com sucesso!');
 
   }
@@ -185,7 +186,8 @@ class Cost extends Component {
         data: [], 
         reload: false, 
         loadingTable: true,
-        loadData: false 
+        loadData: false,
+        spinningLoad: true
       });
       this.constructTable();
     }
@@ -306,13 +308,19 @@ class Cost extends Component {
               pagination={false}
               loading={this.state.loadingTable}
 
-              onRow={ (rc, ri) => {
-                return {
-                  onClick: event => { message.error('Função em desenvolvimento.'); }
-                }
-              }}
+              // onRow={ (rc, ri) => {
+              //   return {
+              //     onClick: event => { message.error('Função em desenvolvimento.'); }
+              //   }
+              // }}
 
             />
+
+            <Row style={{...gridTable, paddingTop: 20}}>
+              <Col span={24} style={{ textAlign: 'center', width: '99%' }}>
+                { (this.state.data && this.state.data.length > 0) && <Spin indicator={<LoadingOutlined style={{ fontSize: 38 }} spin />} spinning={this.state.spinningLoad} /> }
+              </Col>
+            </Row>
 
             <Row style={{...gridTable, paddingTop: 20}}>
               <Col span={12}>
